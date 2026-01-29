@@ -1,7 +1,6 @@
-import { db } from "../Scripts/firebase.js";
+import { db, auth } from "../Scripts/firebase.js";
 import { collection, doc, addDoc, getDocs, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
-
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 export async function loadProducts() {
     const querySnapshot = await getDocs(collection(db, "Product"));
@@ -136,6 +135,52 @@ export async function deleteCategory(categoryId) {
         return false;
     }
 }
+
+
+
+
+
+export async function registerUser(email, password) {
+    try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        console.log("User registered:", userCred.user.uid);
+        return userCred.user;
+    } catch (error) {
+        console.error("Register failed:", error.message);
+        return null;
+    }
+}
+
+
+
+export async function loginUser(email, password) {
+    try {
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        console.log("User logged in:", userCred.user.uid);
+        return userCred.user;
+    } catch (error) {
+        console.error("Login failed:", error.message);
+        return null;
+    }
+}
+
+
+export async function logoutUser() {
+    await signOut(auth);
+    console.log("User logged out");
+}
+
+export async function forgotPassword(email) {
+    try {
+        await sendPasswordResetEmail(auth, email);
+        console.log("Password reset email sent");
+        return true;
+    } catch (error) {
+        console.error("Reset failed:", error.message);
+        return false;
+    }
+}
+
 
 
 
