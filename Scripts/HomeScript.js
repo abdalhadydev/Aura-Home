@@ -9,7 +9,7 @@ import { loadProducts} from "./AuraHomeServices.js";
 
 //await forgotPassword("mustafawork911@gmail.com");
 
-await loadProducts();
+//await loadProducts();
 
 
 const sofaIcon=document.getElementById("sofa-icon");
