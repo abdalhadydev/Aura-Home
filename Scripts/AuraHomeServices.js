@@ -1,4 +1,5 @@
 import { db } from "../Scripts/firebase.js";
+<<<<<<< HEAD
 import {
   collection,
   doc,
@@ -7,6 +8,11 @@ import {
   deleteDoc,
   updateDoc,
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+=======
+import { collection, doc, addDoc, getDocs, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+
+>>>>>>> ba4d08d78d65508f6f95bb7c213330122873e779
 
 export async function loadProducts() {
   const querySnapshot = await getDocs(collection(db, "Product"));
@@ -71,6 +77,7 @@ export async function updateProduct(productId, updates) {
 }
 
 export async function deleteProduct(productId) {
+<<<<<<< HEAD
   try {
     await deleteDoc(doc(db, "Product", productId));
     console.log("Product deleted:", productId);
@@ -80,3 +87,75 @@ export async function deleteProduct(productId) {
     return false;
   }
 }
+=======
+    try {
+        await deleteDoc(doc(db, "Product", productId));
+        console.log("Product deleted:", productId);
+        return true;
+    } catch (e) {
+        console.error("Error deleting product:", e);
+        return false;
+    }
+}
+
+
+
+export async function laodCategories() {
+    const querySnapshot = await getDocs(collection(db, "Category"));
+
+    querySnapshot.forEach((doc) => {
+        console.log(doc.id, doc.data());
+    });
+
+    return querySnapshot;
+}
+
+
+export async function crateCategory(category) {
+    try {
+        const docRef = await addDoc(collection(db, "Category"), {
+            Name: category.Name
+        });
+        return true;
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return false;
+    }
+}
+
+
+
+export async function updateCategory(categoryId, updates) {
+    try {
+        const categoryRef = doc(db, "Category", categoryId);
+
+        await updateDoc(categoryRef, updates);
+
+        console.log("Category updated:", categoryId);
+        return true;
+
+    } catch (error) {
+        console.error("Update failed:", error);
+        return false;
+    }
+}
+
+
+export async function deleteCategory(categoryId) {
+    try {
+        await deleteDoc(doc(db, "Category", categoryId));
+        console.log("Category deleted:", categoryId);
+        return true;
+    } catch (e) {
+        console.error("Error deleting category:", e);
+        return false;
+    }
+}
+
+
+
+
+
+
+
+>>>>>>> ba4d08d78d65508f6f95bb7c213330122873e779
