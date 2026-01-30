@@ -19,7 +19,7 @@
 
 
             <a class="navbar-brand" href="#">
-                <i class="fa-solid fa-couch"></i> Aura Home</a>
+                <i id="sofa-icon" class="fa-solid fa-couch"></i> Aura Home</a>
 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
@@ -37,8 +37,12 @@
                 </ul>
 
 
-                <div class="navbar-right d-flex gap-3">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                <div class="navbar-right d-flex">
+                    <i id="whishlist-icon" type="button" class="fa-regular fa-heart navbar-icon" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"></i>
+                    <i id="search-icon" class="fa-solid fa-magnifying-glass navbar-icon"></i>
+                    <i id="user-icon" class="fa-solid fa-user navbar-icon"></i>
+                    <i id="cart-icon" class="fa-solid fa-cart-shopping navbar-icon"></i>
                 </div>
             </div>
 

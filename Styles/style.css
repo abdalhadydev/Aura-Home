@@ -265,6 +265,7 @@
 
 .button-y:hover {
     color: #025048;
+    border: #025048 2px solid;
 
 }
 
