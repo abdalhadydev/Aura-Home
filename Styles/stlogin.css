@@ -8,7 +8,7 @@
 body {
   background-image:
     linear-gradient(rgba(0, 0, 50, 0.8), rgba(0, 0, 50, 0.8)),
-    url(ChatGPT\ Image\ Jan\ 24\,\ 2026\,\ 11_06_42\ PM.png);
+    url(../Resources/Images/imglogi.png);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -290,17 +290,6 @@ h1 {
   h1 {
     font-size: 20px;
   }
-  /* 
-  .icons i {
-    top: 32px;
-    left: 10px; /* غيريها حسب مكان الأيقونة */
-  /*transform: translateY(-50%);
-    position: relative;
-    top: 40px;
-    margin-left: 5px;
-    color: #025048;
-    justify-content: center;
-  }*/
 }
 #x {
   left: 285px;

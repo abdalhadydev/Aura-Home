@@ -187,15 +187,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Role check
       if (user.role === "admin") {
-        alert("Welcome Admin ");
+        window.location.href = "index.html"; // dashboard
       } else {
-        alert("Login successful ");
+        window.location.href = "home.html"; // صفحة المستخدم
       }
 
       this.reset();
     });
   }
 });
-
-
-
