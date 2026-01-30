@@ -467,9 +467,9 @@
 .card{
     border: none;
 }
-.card-title{
+.prd-card-title{
     font-family: 'Montserrat';
 }
-.card-text{
+.prd-card-text{
     font-family: 'Work-Sans';
 }
