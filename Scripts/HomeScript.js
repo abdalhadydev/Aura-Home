@@ -8,6 +8,7 @@ import { loadProducts} from "./AuraHomeServices.js";
 //console.log(await loginUser("mustafawork911@gmail.com", "147852369"));
 
 //await forgotPassword("mustafawork911@gmail.com");
+//await loginUser("mustafawork911@gmail.com", "147852369");
 
 //await loadProducts();
 
