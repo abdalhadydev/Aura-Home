@@ -20,6 +20,12 @@
     src: url('../Resources/Fonts/Montserrat-Regular.ttf');
 }
 
+
+@font-face {
+    font-family: 'Quizlo';
+    src: url("../Resources/Fonts/Quizlo.otf");
+}
+
 ::selection {
     background: #025048;
     color: white;
@@ -45,6 +51,8 @@
     color: white;
     font-size: 2rem;
     margin-left: 4.5rem;
+    font-weight: bold;
+    
 }
 .navbar-brand:focus{
     color: white;
