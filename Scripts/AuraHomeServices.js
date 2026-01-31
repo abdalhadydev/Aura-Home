@@ -261,6 +261,7 @@ export async function getAllOrders() {
 }
 
 
+
 export async function promoteToAdmin(targetUserId) {
     const currentUser = auth.currentUser;
 
@@ -317,6 +318,15 @@ export async function updateOrderStatus(orderId, newStatus) {
         return false;
     }
 }
+
+
+
+export async function loadUsers() {
+    //console.log(auth.currentUser);
+    const querySnapshot = await getDocs(collection(db, "users"));
+    return querySnapshot;
+}
+
 
 
 

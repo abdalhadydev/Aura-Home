@@ -1,7 +1,7 @@
 
 import { registerUser, loginUser, forgotPassword} from "./AuraHomeServices.js";
 
-import { loadProducts} from "./AuraHomeServices.js";
+import { loadProducts, loadUsers} from "./AuraHomeServices.js";
 
 
 //await registerUser("mustafawork911@gmail.com", "147852369");
@@ -15,6 +15,10 @@ data.forEach(e => {
     console.log(e.data().Product_Name);
     console.log(e.data().Price);
 });
+*/
+/*
+let x=await loadUsers();
+console.log(x.data());
 */
 
 
