@@ -2,20 +2,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Work Sans", sans-serif;
+  font-family: "Playfair Display", serif;
 }
 
 body {
-  background-image:
-    linear-gradient(rgba(0, 0, 50, 0.8), rgba(0, 0, 50, 0.8)),
-    url(../Resources/Images/imglogi.png);
+  min-height: 100vh;
+  margin: 0;
+
+  /* Overlay + Image */
+  background:
+   
+    url("../Resources/Images/imglogi.png") center / cover
+      no-repeat;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
+ 
 }
 
 /* ================= CONTAINER ================= */
@@ -30,11 +33,29 @@ body {
   min-height: 480px;
 }
 
-.container p {
+/* .container p {
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.3px;
   margin: 20px 0;
+} */
+.container p {
+  font-size: 14px;
+  line-height: 22px; 
+  letter-spacing: 0.4px;
+  margin: 18px 0;
+  color: #025048; 
+  background: rgba(2, 80, 72, 0.05); 
+  padding: 10px 15px;
+  border-left: 4px solid #025048; 
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.container p:hover {
+  background: rgba(2, 80, 72, 0.15); 
+  transform: translateX(3px); 
 }
 
 .container a {
@@ -47,16 +68,29 @@ body {
 .container button {
   background-color: #025048;
   color: #fff;
-  font-size: 12px;
-  padding: 10px 45px;
-  border: 1px solid transparent;
-  border-radius: 8px;
+  font-size: 14px;
+  padding: 12px 50px;
+  border: none;
+  border-radius: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   margin-top: 10px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect */
+.container button:hover {
+  background-color: #033f3d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.container button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .container button:hover {
@@ -82,7 +116,7 @@ body {
 
 .container input {
   background-color: #f2f5f4;
-  border: none;
+ border: 1px solid #ccc;
   margin: 8px 0;
   padding: 10px 15px;
   font-size: 13px;
@@ -96,12 +130,28 @@ body {
   line-height: 20px;
   font-family: "Playfair Display", serif;
 
+  
 }
 
 /* ================= HEADINGS ================= */
+/* h1 {
+  font-family: "Playfair Display", serif;
+  color: #025048;
+} */
 h1 {
   font-family: "Playfair Display", serif;
   color: #025048;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+h1:hover {
+  color: #033f3d;
+  transform: translateY(-2px);
 }
 
 /* ================= FORM CONTAINERS ================= */
@@ -292,10 +342,34 @@ h1 {
   h1 {
     font-size: 20px;
   }
-
 }
+#r {
+  position: absolute;
+
+  top: 100%;
+
+  transform: translateY(-50%);
+
+  cursor: pointer;
+  color: #025048;
+  z-index: 10;
+  font-size: 18px;
+}
+.toggle-panel p {
+  color: #ffffff;
+}
+
 #x {
-  left: 285px;
+  position: absolute;
+
+  top: 100%;
+
+  transform: translateY(-50%);
+
+  cursor: pointer;
+  color: #025048;
+  z-index: 10;
+  font-size: 18px;
 }
 .toggle-panel p {
   color: #ffffff;
@@ -328,17 +402,21 @@ h1 {
   width: 100%;
   padding-right: 45px;
   height: 44px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  box-sizing: border-box;
 }
 
 .password-box .toggle-pass {
   position: absolute;
   right: 12px;
-  top: 50px;
+  top: 50%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transform: translateY(-50%);
+
   cursor: pointer;
   color: #025048;
-  font-size: 16px;
+  z-index: 10;
+  font-size: 18px;
 }
