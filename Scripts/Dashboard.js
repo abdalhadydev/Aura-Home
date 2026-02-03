@@ -1,141 +1,88 @@
-import { db } from "./firebase.js";
-import {
-  collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+// Pie Chart
 
-/* ===================== ELEMENTS ===================== */
-const totalOrdersEl = document.querySelector(".stat-card:nth-child(1) h2");
-const totalCustomersEl = document.querySelector(".stat-card:nth-child(2) h2");
-const ordersThisMonthEl = document.querySelector(".stat-card:nth-child(3) h2");
-
-/* ===================== CHARTS ===================== */
-
-// ===== Order Status Pie =====
-const orderStatusChart = new Chart(
-  document.getElementById("orderStatus"),
-  {
-    type: "doughnut",
-    data: {
-      labels: ["Completed", "Pending", "Canceled"],
-      datasets: [
+      const orderStatusChart = new Chart(
+        document.getElementById("orderStatus"),
         {
-          data: [0, 0, 0],
-          backgroundColor: ["#22c55e", "#facc15", "#ef4444"],
-          borderWidth: 0,
+          type: "doughnut",
+          data: {
+            labels: ["Completed", "In Progress", "Canceled"],
+            datasets: [
+              {
+                data: [],
+                backgroundColor: ["#22c55e", "#facc15", "#ef4444"],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              legend: {
+                display: true,
+              },
+            },
+            cutout: "70%",
+          },
         },
-      ],
-    },
-    options: {
-      cutout: "70%",
-      plugins: {
-        legend: {
-          position: "bottom",
-        },
-      },
-    },
-  }
-);
+      );
 
-// ===== Orders by Month =====
-const ordersByMonthChart = new Chart(
-  document.getElementById("ordersByMonth"),
-  {
-    type: "bar",
-    data: {
-      labels: [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-      ],
-      datasets: [
+      // Bar Chart - Orders by Month (initially empty)
+      const ordersByMonthChart = new Chart(
+        document.getElementById("ordersByMonth"),
         {
-          label: "Orders",
-          data: new Array(12).fill(0),
+          type: "bar",
+          data: {
+            labels: ["January", "February", "March", "April", "May", "June"],
+            datasets: [
+              {
+                label: "Number of Orders",
+                data: [],
+                backgroundColor: "#3b82f6",
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 1,
+                },
+              },
+            },
+          },
         },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { stepSize: 1 },
-        },
-      },
-    },
-  }
-);
+      );
 
-/* ===================== LOAD DASHBOARD DATA ===================== */
-async function loadDashboardData() {
-  try {
-    const snapshot = await getDocs(collection(db, "orders"));
+      // Sign Out
+      const logoutBtn = document.getElementById("logoutBtn");
 
-    let completed = 0;
-    let pending = 0;
-    let canceled = 0;
-
-    let customers = new Set();
-    let ordersPerMonth = new Array(12).fill(0);
-
-    const currentMonth = new Date().getMonth();
-    let ordersThisMonth = 0;
-
-    snapshot.forEach((doc) => {
-      const order = doc.data();
-
-      /* ===== CUSTOMER ===== */
-      if (order.userEmail) {
-        customers.add(order.userEmail);
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+          localStorage.removeItem("currentUser");
+          window.location.href = "Login.html";
+        });
       }
 
-      /* ===== STATUS ===== */
-      if (order.status === "completed") completed++;
-      else if (order.status === "pending") pending++;
-      else if (order.status === "canceled") canceled++;
 
-      /* ===== DATE ===== */
-      if (order.createdAt?.toDate) {
-        const date = order.createdAt.toDate();
-        const monthIndex = date.getMonth();
+       import { db } from "./firebase.js";
+  import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-        ordersPerMonth[monthIndex]++;
+  // العنصر اللي هيعرض عدد اليوزرز
+  const totalCustomersEl = document.querySelector(".stat-card:nth-child(2) h2");
 
-        if (monthIndex === currentMonth) {
-          ordersThisMonth++;
-        }
-      }
-    });
+  async function loadTotalCustomers() {
+    try {
+      const usersSnapshot = await getDocs(collection(db, "users"));
 
-    /* ================= UPDATE CARDS ================= */
-    totalOrdersEl.textContent = snapshot.size;
-    totalCustomersEl.textContent = customers.size;
-    ordersThisMonthEl.textContent = ordersThisMonth;
+      // عدد المستخدمين
+      const totalUsers = usersSnapshot.size;
 
-    /* ================= UPDATE PIE ================= */
-    orderStatusChart.data.datasets[0].data = [
-      completed,
-      pending,
-      canceled,
-    ];
-    orderStatusChart.update();
-
-    /* ================= UPDATE BAR ================= */
-    ordersByMonthChart.data.datasets[0].data = ordersPerMonth;
-    ordersByMonthChart.update();
-
-  } catch (error) {
-    console.error("Dashboard Error:", error);
+      // عرض العدد
+      totalCustomersEl.textContent = totalUsers;
+    } catch (error) {
+      console.error("Error loading total customers:", error);
+    }
   }
-}
 
-/* ===================== LOGOUT ===================== */
-const logoutBtn = document.getElementById("logoutBtn");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("currentUser");
-    window.location.href = "Login.html";
-  });
-}
-
-/* ===================== INIT ===================== */
-window.addEventListener("DOMContentLoaded", loadDashboardData);
+  // تحميل العدد عند فتح الداشبورد
+  window.addEventListener("DOMContentLoaded", loadTotalCustomers);

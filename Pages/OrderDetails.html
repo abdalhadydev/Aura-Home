@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details - Aura Home Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #4a90e2; --bg: #f8f9fa; }
+        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; }
+        .details-card { border: none; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .status-header { background: #fff; border-bottom: 1px solid #eee; padding: 20px; border-radius: 15px 15px 0 0; }
+        .item-row { border-bottom: 1px solid #f1f1f1; padding: 15px 0; }
+        .item-row:last-child { border-bottom: none; }
+        .badge-status { padding: 8px 16px; border-radius: 50px; font-weight: 600; }
+        .back-btn { color: var(--primary); text-decoration: none; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="container my-5" style="max-width: 800px;">
+        <a href="myOrder.html" class="back-btn mb-4 d-inline-block">
+            <i class="fas fa-arrow-left me-2"></i> Back to My Orders
+        </a>
+
+        <div id="orderDetailsContainer">
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2">Loading order details...</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, auth } from "../Scripts/firebase.js";
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+        const container = document.getElementById('orderDetailsContainer');
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && orderId) {
+                fetchOrderDetails(orderId);
+            } else if (!user) {
+                window.location.href = "Login.html";
+            }
+        });
+
+        async function fetchOrderDetails(id) {
+            try {
+                const docRef = doc(db, "orders", id);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    renderDetails(docSnap.id, docSnap.data());
+                } else {
+                    container.innerHTML = `<div class="alert alert-warning">Order not found.</div>`;
+                }
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = `<div class="alert alert-danger">Error loading details.</div>`;
+            }
+        }
+
+        function renderDetails(id, data) {
+            const date = data.createdAt?.seconds ? new Date(data.createdAt.seconds * 1000).toLocaleString() : "N/A";
+            const status = data.status || 'pending';
+            
+            let itemsHtml = '';
+            if (data.items && Array.isArray(data.items)) {
+                itemsHtml = data.items.map(item => `
+                    <div class="item-row d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">${item.name || 'Product'}</h6>
+                            <small class="text-muted">Qty: ${item.quantity || 1}</small>
+                        </div>
+                        <span class="fw-bold">$${item.price || 0}</span>
+                    </div>
+                `).join('');
+            }
+
+            container.innerHTML = `
+                <div class="card details-card">
+                    <div class="status-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">Order #${id.substring(0,8).toUpperCase()}</h5>
+                            <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> ${date}</small>
+                        </div>
+                        <span class="badge-status ${status === 'accepted' ? 'bg-success text-white' : 'bg-warning text-dark'}">
+                            ${status.toUpperCase()}
+                        </span>
+                    </div>
+                    <div class="card-body p-4">
+                        <h6 class="text-uppercase text-muted small fw-bold mb-3">Order Items</h6>
+                        <div class="mb-4">${itemsHtml || '<p>No items found</p>'}</div>
+                        
+                        <hr>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <h5 class="mb-0">Total Amount</h5>
+                            <h4 class="mb-0 text-primary fw-bold">$${data.total || 0}</h4>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,7 +1,9 @@
 import { createOrder as firebaseCreateOrder } from "../Scripts/AuraHomeServices.js";
 import { auth } from "../Scripts/firebase.js";
 
+
 const cartKey = "aura_cart";
+
 
 function getCart() {
   return JSON.parse(localStorage.getItem(cartKey)) || [];
@@ -173,6 +175,7 @@ async function handleCheckout() {
     updateCartIconCount();
     renderCart();
     alert("Order placed successfully!");
+    
   } else {
     alert("Failed to place order. Please try again.");
     if (btn) {
@@ -188,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCart();
   }
 });
+
 
 window.addToCartFromPage = addToCartFromPage;
 window.updateQuantity = updateQuantity;
