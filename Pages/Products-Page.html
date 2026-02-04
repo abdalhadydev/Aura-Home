@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg">
+     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid d-flex align-items-center justify-content-between">
 
 
@@ -30,35 +30,35 @@
 
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4 navbar-center">
                     <li class="nav-item"><a class="nav-link" href="Home.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Products-Page.html">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="contactUs.html">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="myOrder.html">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="myOrder.html">My Orders</a></li>
+
                 </ul>
 
-                <div class="navbar-right d-flex align-items-center">
-                    <div class="position-relative d-inline-block cursor-pointer me-3" onclick="toggleWishlist()"
-                        style="cursor: pointer;">
-                        <i id="whishlist-icon" class="fa-regular fa-heart navbar-icon"></i>
-                        <span id="wishlist-count"
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="display: none; font-size: 0.65rem; min-width: 18px; height: 18px; line-height: 10px;">
-                            0
-                        </span>
-                    </div>
-                    <i id="search-icon" class="fa-solid fa-magnifying-glass navbar-icon me-3"></i>
-                    <i id="user-icon" class="fa-solid fa-user navbar-icon me-3"></i>
 
-                    <div class="position-relative d-inline-block cursor-pointer" onclick="toggleCart()"
-                        style="cursor: pointer;">
-                        <i id="cart-icon" class="fa-solid fa-cart-shopping navbar-icon"></i>
-                        <span id="cart-count"
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                            style="display: none; font-size: 0.65rem; min-width: 18px; height: 18px; line-height: 10px;">
-                            0
-                        </span>
-                    </div>
-                </div>
+                <div class="navbar-right d-flex align-items-center">
+                    <lord-icon
+    src="https://cdn.lordicon.com/xaekjsls.json"
+    trigger="hover"
+    style="height:50px" colors="primary:#ffffff">
+</lord-icon>
+    <div class="position-relative me-3" onclick="toggleWishlist()" style="cursor: pointer;">
+        <lord-icon src="https://cdn.lordicon.com/hsabxdnr.json" trigger="hover" colors="primary:#ffffff" style="height:50px"></lord-icon>
+        <span id="wishlist-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none; font-size: 0.7rem; z-index: 10;">0</span>
+    </div>
+
+    <div id="UserIcon" class="d-flex align-items-center">    <lord-icon src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff" style="height:50px"></lord-icon>
+</div>
+
+
+    <div class="position-relative ms-3" onclick="toggleCart( )" style="cursor: pointer;">
+        <lord-icon src="https://cdn.lordicon.com/fmsilsqx.json" trigger="hover" state="hover-slide" colors="primary:#ffffff" style="height:50px"></lord-icon>
+        <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none; font-size: 0.7rem; z-index: 10;">0</span>
+    </div>
+    
+</div>
             </div>
 
         </div>
@@ -186,7 +186,8 @@
 </div>
 
 
-    
+        <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
     <script src="../Scripts/wishlist.js" type="module"></script>
     <script src="../Scripts/Cartscript.js" type="module"></script>
     <script src="../Scripts/ProductPageScript.js" type="module"></script>

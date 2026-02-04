@@ -1,38 +1,46 @@
-import { createOrder as firebaseCreateOrder, getProductById } from "../Scripts/AuraHomeServices.js";
+import {
+  createOrder as firebaseCreateOrder,
+  getProductById,
+  updateProduct,
+  logoutUser,
+} from "../Scripts/AuraHomeServices.js";
 import { auth } from "../Scripts/firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const cartKey = "aura_cart";
 
-/**
- * وظيفة لإظهار نافذة منبثقة (Pop-up) بتنسيق متوافق مع الهوية البصرية للموقع
- */
-function showCustomPopup(title, message, type = 'alert') {
-    const popupId = 'aura-custom-popup';
-    if (document.getElementById(popupId)) document.getElementById(popupId).remove();
+function showCustomPopup(title, message, type = "alert") {
+  const popupId = "aura-custom-popup";
+  if (document.getElementById(popupId))
+    document.getElementById(popupId).remove();
 
-    const isAuth = type === 'auth';
-    
-    const popupHtml = `
+  const isAuth = type === "auth";
+
+  const popupHtml = `
         <div id="${popupId}" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
             <div style="background: white; padding: 40px; border-radius: 0; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2); border: 1px solid #eee; animation: fadeInScale 0.3s ease;">
                 <div style="color: #025048; font-size: 3.5rem; margin-bottom: 20px;">
-                    <i class="fas ${isAuth ? 'fa-user-lock' : 'fa-exclamation-circle'}"></i>
+                    <i class="fas ${isAuth ? "fa-user-lock" : "fa-exclamation-circle"}"></i>
                 </div>
                 <h3 style="font-family: 'Poppins', sans-serif; color: #025048; margin-bottom: 15px; font-weight: 600;">${title}</h3>
                 <p style="font-family: 'workSans', sans-serif; color: #8E8E93; margin-bottom: 30px; line-height: 1.6;">${message}</p>
                 <div style="display: flex; gap: 10px;">
-                    ${isAuth ? `
+                    ${
+                      isAuth
+                        ? `
                         <button id="popup-main-btn" style="background: #025048; color: white; border: none; padding: 12px 20px; border-radius: 50px; font-family: 'workSans', sans-serif; font-weight: bold; cursor: pointer; flex: 1;">
                             Sign in Now
                         </button>
                         <button onclick="document.getElementById('${popupId}').remove()" style="background: transparent; color: #8E8E93; border: 1px solid #ddd; padding: 12px 20px; border-radius: 50px; font-family: 'workSans', sans-serif; font-weight: bold; cursor: pointer; flex: 1;">
                             Cancel
                         </button>
-                    ` : `
+                    `
+                        : `
                         <button onclick="document.getElementById('${popupId}').remove()" style="background: #025048; color: white; border: none; padding: 12px 20px; border-radius: 50px; font-family: 'workSans', sans-serif; font-weight: bold; cursor: pointer; width: 100%;">
                             Got it
                         </button>
-                    `}
+                    `
+                    }
                 </div>
             </div>
         </div>
@@ -41,13 +49,13 @@ function showCustomPopup(title, message, type = 'alert') {
         </style>
     `;
 
-    document.body.insertAdjacentHTML('beforeend', popupHtml);
+  document.body.insertAdjacentHTML("beforeend", popupHtml);
 
-    if (isAuth) {
-        document.getElementById('popup-main-btn').onclick = () => {
-            window.location.href = "login.html";
-        };
-    }
+  if (isAuth) {
+    document.getElementById("popup-main-btn").onclick = () => {
+      window.location.href = "login.html";
+    };
+  }
 }
 
 function getCart() {
@@ -69,9 +77,6 @@ function toggleCart() {
   }
 }
 
-/**
- * إضافة للمنتج مع التحقق من المخزون من Firebase
- */
 async function addToCartFromPage(btn) {
   const card = btn.closest(".card");
   const id = card.getAttribute("data-id");
@@ -81,34 +86,36 @@ async function addToCartFromPage(btn) {
 
   if (!id) return;
 
-  // إظهار حالة تحميل بسيطة على الزر
   const originalText = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
 
   try {
-    // جلب بيانات المنتج الحقيقية من Firebase للتأكد من المخزون
     const productData = await getProductById(id);
-    
+
     if (!productData) {
-        showCustomPopup("Error", "Product details could not be retrieved.");
-        return;
+      showCustomPopup("Error", "Product details could not be retrieved.");
+      return;
     }
 
     const stock = parseInt(productData.Stock_Quantity) || 0;
     let cart = getCart();
     const existingItemIndex = cart.findIndex((item) => item.id === id);
-    const currentQtyInCart = existingItemIndex > -1 ? cart[existingItemIndex].quantity : 0;
+    const currentQtyInCart =
+      existingItemIndex > -1 ? cart[existingItemIndex].quantity : 0;
 
     if (currentQtyInCart + 1 > stock) {
-        showCustomPopup("Out of Stock", `Sorry, only ${stock} units are available in stock.`);
-        return;
+      showCustomPopup(
+        "Out of Stock",
+        `Sorry, only ${stock} units are available in stock.`,
+      );
+      return;
     }
 
     if (existingItemIndex > -1) {
-        cart[existingItemIndex].quantity += 1;
+      cart[existingItemIndex].quantity += 1;
     } else {
-        cart.push({ id, name, price, img, quantity: 1, stock: stock });
+      cart.push({ id, name, price, img, quantity: 1, stock: stock });
     }
 
     saveCart(cart);
@@ -132,7 +139,10 @@ function updateQuantity(id, change) {
     const stock = item.stock || 0;
 
     if (newQty > stock) {
-      showCustomPopup("Limit Reached", `You cannot add more than ${stock} units of this item.`);
+      showCustomPopup(
+        "Limit Reached",
+        `You cannot add more than ${stock} units of this item.`,
+      );
       return;
     }
 
@@ -150,32 +160,67 @@ async function handleCheckout() {
   const btn = document.querySelector(".checkout-btn-main");
 
   if (cart.length === 0) {
-    showCustomPopup("Empty Cart", "Please add items to your cart before checking out.");
+    showCustomPopup(
+      "Empty Cart",
+      "Please add items to your cart before checking out.",
+    );
     return;
   }
 
   const user = auth.currentUser;
   if (!user) {
-    showCustomPopup("Sign in Required", "Please Sign in or log in to complete your order.", "auth");
+    showCustomPopup(
+      "Sign in Required",
+      "Please Sign in or log in to complete your order.",
+      "auth",
+    );
     sessionStorage.setItem("redirectAfterLogin", window.location.href);
     return;
   }
 
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
+    btn.innerHTML =
+      '<span class="spinner-border spinner-border-sm"></span> Processing...';
   }
 
-  const total = cart.reduce((t, i) => t + i.price * i.quantity, 0).toFixed(2);
-  const success = await firebaseCreateOrder(cart, total);
+  try {
+    const total = cart.reduce((t, i) => t + i.price * i.quantity, 0).toFixed(2);
+    const success = await firebaseCreateOrder(cart, total);
 
-  if (success) {
-    localStorage.removeItem(cartKey);
-    updateCartIconCount();
-    renderCart();
-    showCustomPopup("Success!", "Your order has been placed successfully!", "alert");
-  } else {
-    showCustomPopup("Error", "Failed to place order. Please try again.");
+    if (success) {
+      for (const item of cart) {
+        const productData = await getProductById(item.id);
+        if (productData) {
+          const newStock =
+            (parseInt(productData.Stock_Quantity) || 0) - item.quantity;
+          await updateProduct(item.id, {
+            Stock_Quantity: newStock >= 0 ? newStock : 0,
+          });
+        }
+      }
+
+      localStorage.removeItem(cartKey);
+      updateCartIconCount();
+      renderCart();
+      showCustomPopup(
+        "Success!",
+        "Your order has been placed successfully!",
+        "alert",
+      );
+    } else {
+      showCustomPopup("Error", "Failed to place order. Please try again.");
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = "Try Again";
+      }
+    }
+  } catch (error) {
+    console.error("Checkout error:", error);
+    showCustomPopup(
+      "Error",
+      "Something went wrong during checkout. Please try again.",
+    );
     if (btn) {
       btn.disabled = false;
       btn.innerHTML = "Try Again";
@@ -191,12 +236,15 @@ function renderCart() {
   if (!container) return;
 
   if (cart.length === 0) {
-    container.innerHTML = '<div class="text-center text-muted mt-5"><i class="fa-solid fa-cart-shopping fa-3x mb-3"></i><p>Your cart is empty.</p></div>';
+    container.innerHTML =
+      '<div class="text-center text-muted mt-5"><i class="fa-solid fa-cart-shopping fa-3x mb-3"></i><p>Your cart is empty.</p></div>';
     if (totalElement) totalElement.innerText = "$0.00";
     return;
   }
 
-  container.innerHTML = cart.map(item => `
+  container.innerHTML = cart
+    .map(
+      (item) => `
         <div class="d-flex align-items-center border-bottom py-3">
             <img src="${item.img}" alt="${item.name}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 0;">
             <div class="ms-3 flex-grow-1">
@@ -213,9 +261,13 @@ function renderCart() {
                 <button class="btn btn-sm text-danger p-0" onclick="removeFromCart('${item.id}')"><i class="fa-solid fa-trash-can"></i></button>
             </div>
         </div>
-    `).join("");
+    `,
+    )
+    .join("");
 
-  if (totalElement) totalElement.innerText = "$" + cart.reduce((t, i) => t + i.price * i.quantity, 0).toFixed(2);
+  if (totalElement)
+    totalElement.innerText =
+      "$" + cart.reduce((t, i) => t + i.price * i.quantity, 0).toFixed(2);
 }
 
 function removeFromCart(id) {
@@ -233,6 +285,43 @@ function updateCartIconCount() {
     badge.style.display = totalItems > 0 ? "flex" : "none";
   }
 }
+
+onAuthStateChanged(auth, (user) => {
+  const userIconContainer = document.getElementById("UserIcon");
+  if (!userIconContainer) return;
+
+  if (user) {
+    userIconContainer.innerHTML = `
+      <div class="dropdown">
+        <lord-icon 
+          src="https://cdn.lordicon.com/spzqjmbt.json" 
+          trigger="hover" 
+          colors="primary:#ffffff" 
+          style="height:50px; cursor:pointer;"
+          id="userDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+        </lord-icon>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+      </div>
+    `;
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.onclick = async (e) => {
+        e.preventDefault();
+        const success = await logoutUser();
+        if (success) window.location.reload();
+      };
+    }
+  } else {
+    userIconContainer.innerHTML = `
+      <a href="login.html" class="nav-link text-white fw-bold" style="font-family: 'workSans';">Login</a>
+    `;
+  }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   updateCartIconCount();

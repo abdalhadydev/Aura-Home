@@ -137,18 +137,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
       </div>
 
-      <section class="related-section">
-        <h2 class="sub-title">Related Products</h2>
-        <div class="related-grid">
-          <div class="item-card">
-            <div class="item-img">
-              <button class="wish-tab"><i class="fa-regular fa-heart"></i></button>
-              <img src="../Resources/Images/61pBMc4mlPL._AC_UF894,1000_QL80_.jpg" alt="Related">
-            </div>
-          </div>
-          <!-- More related products could be loaded here -->
-        </div>
-      </section>
     `;
 
     container.innerHTML = detailsTemplate;
