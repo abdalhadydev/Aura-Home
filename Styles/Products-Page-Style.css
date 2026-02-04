@@ -106,7 +106,6 @@ body {
 .card-img-top {
     height: 200px;
     object-fit: cover;
-    /* border-radius: 4px; */
 }
 
 
@@ -384,7 +383,6 @@ footer {
     cursor: pointer;
     position: relative;
 }
-/* Notifaction*/
 #cart-count {
     min-width: 18px;
     height: 18px;
@@ -401,7 +399,6 @@ footer {
     display: inline-flex !important;
     vertical-align: middle;
 }
-/* Wish list*/
 .wishlist-btn-overlay:hover {
     transform: scale(1.1);
     transition: transform 0.2s ease;

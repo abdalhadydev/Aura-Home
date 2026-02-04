@@ -3,6 +3,7 @@ import {
   createProduct,
   updateProduct,
   deleteProduct as firebaseDeleteProduct,
+  loadCategories,
 } from "../Scripts/AuraHomeServices.js";
 
 const productForm = document.getElementById("product-form");
@@ -67,6 +68,31 @@ async function fetchAndRenderProducts() {
     console.error("Error loading products:", error);
     productsList.innerHTML =
       '<tr><td colspan="8" class="text-center text-danger">Error loading products.</td></tr>';
+  }
+}
+
+async function fetchAndRenderCategories() {
+  if (!productCategorySelect) return;
+  try {
+    const categoriesSnapshot = await loadCategories();
+
+    productCategorySelect.innerHTML =
+      '<option value="">Select Category</option>';
+
+    categoriesSnapshot.forEach((doc) => {
+      const categoryData = doc.data();
+      const categoryName = categoryData.Name;
+
+      if (categoryName) {
+        const option = document.createElement("option");
+        option.value = categoryName;
+        option.textContent = categoryName;
+        option.style.color = "#000";
+        productCategorySelect.appendChild(option);
+      }
+    });
+  } catch (error) {
+    console.error("Error loading categories:", error);
   }
 }
 
@@ -153,3 +179,4 @@ function resetForm() {
 cancelEditBtn.addEventListener("click", resetForm);
 
 fetchAndRenderProducts();
+fetchAndRenderCategories();

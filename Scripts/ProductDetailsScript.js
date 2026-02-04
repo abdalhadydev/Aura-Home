@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const product = {
+      id: productId,
       name: productData.Product_Name || "Product Name",
       price: productData.Price || "0",
       oldPrice: productData.Discount_Price || "",
@@ -82,6 +83,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           `<img src="${img}" class="thumb ${index === 0 ? "active" : ""}" onclick="updateMainImage(this)">`,
       )
       .join("");
+
+    const wishlist = JSON.parse(localStorage.getItem("aura_wishlist")) || [];
+    const isFavorite = wishlist.some((item) => item.id === product.id);
+    const heartIconClass = isFavorite ? "fa-solid" : "fa-regular";
 
     const detailsTemplate = `
       <div class="main-wrapper">
@@ -128,19 +133,19 @@ document.addEventListener("DOMContentLoaded", async () => {
               </div>
 
               <div class="btns-group">
-                <button class="btn-action btn-add button-y">ADD TO CART</button>
-                <button class="btn-wish"><i class="fa-regular fa-heart"></i></button>
-                <button class="btn-action btn-buy button-y">BUY NOW</button>
+                <button class="btn-action btn-add button-y" id="add-to-cart-btn">ADD TO CART</button>
+                <button class="btn-wish" id="wishlist-btn">
+                    <i class="${heartIconClass} fa-heart"></i>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     `;
 
     container.innerHTML = detailsTemplate;
-    setupInteractions(product.stock);
+    setupInteractions(product.stock, product);
   } catch (error) {
     console.error("Error loading product:", error);
     container.innerHTML =
@@ -148,10 +153,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-function setupInteractions(maxStock) {
+function setupInteractions(maxStock, product) {
   const qtyInput = document.getElementById("qty-input");
   const minusBtn = document.getElementById("minus-btn");
   const plusBtn = document.getElementById("plus-btn");
+  const addToCartBtn = document.getElementById("add-to-cart-btn");
+  const wishlistBtn = document.getElementById("wishlist-btn");
   const stockLimit = parseInt(maxStock) || 1;
 
   if (plusBtn && minusBtn && qtyInput) {
@@ -164,6 +171,69 @@ function setupInteractions(maxStock) {
     minusBtn.onclick = () => {
       if (parseInt(qtyInput.value) > 1) {
         qtyInput.value = parseInt(qtyInput.value) - 1;
+      }
+    };
+  }
+
+  if (addToCartBtn) {
+    addToCartBtn.onclick = function () {
+      if (typeof window.addToCartFromPage === "function") {
+        const mockBtn = {
+          closest: () => ({
+            getAttribute: (attr) => {
+              if (attr === "data-id") return product.id;
+              if (attr === "data-name") return product.name;
+              if (attr === "data-price") return product.price;
+              if (attr === "data-img") return product.imgs[0];
+            },
+          }),
+        };
+
+        window.addToCartFromPage(mockBtn);
+
+        const quantity = parseInt(qtyInput.value);
+        if (quantity > 1) {
+          setTimeout(() => {
+            let cart = JSON.parse(localStorage.getItem("aura_cart")) || [];
+            const itemIndex = cart.findIndex((item) => item.id === product.id);
+            if (itemIndex > -1) {
+              cart[itemIndex].quantity = quantity;
+              localStorage.setItem("aura_cart", JSON.stringify(cart));
+              if (typeof window.updateCartIconCount === "function")
+                window.updateCartIconCount();
+              if (typeof window.renderCart === "function") window.renderCart();
+            }
+          }, 150);
+        }
+      }
+    };
+  }
+
+  if (wishlistBtn) {
+    wishlistBtn.onclick = function (e) {
+      if (typeof window.handleWishlistClick === "function") {
+        const icon = this.querySelector("i");
+
+        
+        const mockBtn = {
+          closest: () => ({
+            getAttribute: (attr) => {
+              if (attr === "data-id") return product.id;
+              if (attr === "data-name") return product.name;
+              if (attr === "data-price") return product.price;
+              if (attr === "data-img") return product.imgs[0];
+            },
+          }),
+          querySelector: (sel) => this.querySelector(sel),
+        };
+
+        window.handleWishlistClick(e, mockBtn);
+
+        if (icon.classList.contains("fa-regular")) {
+          icon.classList.replace("fa-regular", "fa-solid");
+        } else {
+          icon.classList.replace("fa-solid", "fa-regular");
+        }
       }
     };
   }

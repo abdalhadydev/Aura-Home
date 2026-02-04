@@ -298,71 +298,73 @@ resetBtn.addEventListener("click", () => {
 initShop();*/
 
 
-import { loadProducts } from "../Scripts/AuraHomeServices.js";
+import { loadProducts, loadCategories } from "../Scripts/AuraHomeServices.js";
 
 const productsRow = document.getElementById("products-row");
 const priceRange = document.getElementById("price-range");
 const priceValue = document.getElementById("price-value");
 const productCount = document.getElementById("product-count");
 const resetBtn = document.getElementById("reset-filters");
-const categoryChecks = document.querySelectorAll(".category-check");
+const categoryListContainer = document.querySelector(".category-list");
 const quickPriceBtns = document.querySelectorAll(".quick-price");
 
 let allProducts = [];
 
 function getWishlist() {
-    return JSON.parse(localStorage.getItem('aura_wishlist')) || [];
+  return JSON.parse(localStorage.getItem("aura_wishlist")) || [];
 }
 
 export function toggleWishlist() {
-    const sidebarElement = document.getElementById('wishlistSidebar');
-    if (sidebarElement) {
-        let bsOffcanvas = bootstrap.Offcanvas.getInstance(sidebarElement);
-        if (!bsOffcanvas) {
-            bsOffcanvas = new bootstrap.Offcanvas(sidebarElement);
-        }
-        bsOffcanvas.show(); 
+  const sidebarElement = document.getElementById("wishlistSidebar");
+  if (sidebarElement) {
+    let bsOffcanvas = bootstrap.Offcanvas.getInstance(sidebarElement);
+    if (!bsOffcanvas) {
+      bsOffcanvas = new bootstrap.Offcanvas(sidebarElement);
     }
+    bsOffcanvas.show();
+  }
 }
 
-window.handleWishlistClick = function(e, btn) {
-    e.stopPropagation();
-    const card = btn.closest('.card');
-    const productId = card.getAttribute('data-id');
-    const icon = btn.querySelector('i');
-    
-    let wishlist = JSON.parse(localStorage.getItem('aura_wishlist')) || [];
-    const existingIndex = wishlist.findIndex(item => item.id === productId);
+window.handleWishlistClick = function (e, btn) {
+  e.stopPropagation();
+  const card = btn.closest(".card");
+  const productId = card.getAttribute("data-id");
+  const icon = btn.querySelector("i");
 
-    if (existingIndex > -1) {
-        wishlist.splice(existingIndex, 1);
-        icon.classList.replace('fa-solid', 'fa-regular');
-    } else {
-        wishlist.push({
-            id: productId,
-            name: card.getAttribute('data-name'),
-            price: card.getAttribute('data-price'),
-            img: card.getAttribute('data-img')
-        });
-        icon.classList.replace('fa-regular', 'fa-solid');
-    }
-    
-    localStorage.setItem('aura_wishlist', JSON.stringify(wishlist));
+  let wishlist = JSON.parse(localStorage.getItem("aura_wishlist")) || [];
+  const existingIndex = wishlist.findIndex((item) => item.id === productId);
 
-    if (typeof window.updateWishlistIconCount === "function") {
-        window.updateWishlistIconCount();
-    }
-    if (typeof window.renderWishlist === "function") {
-        window.renderWishlist();
-    }
+  if (existingIndex > -1) {
+    wishlist.splice(existingIndex, 1);
+    icon.classList.replace("fa-solid", "fa-regular");
+  } else {
+    wishlist.push({
+      id: productId,
+      name: card.getAttribute("data-name"),
+      price: card.getAttribute("data-price"),
+      img: card.getAttribute("data-img"),
+    });
+    icon.classList.replace("fa-regular", "fa-solid");
+  }
+
+  localStorage.setItem("aura_wishlist", JSON.stringify(wishlist));
+
+  if (typeof window.updateWishlistIconCount === "function") {
+    window.updateWishlistIconCount();
+  }
+  if (typeof window.renderWishlist === "function") {
+    window.renderWishlist();
+  }
 };
-
 
 window.toggleWishlist = toggleWishlist;
 window.handleWishlistClick = handleWishlistClick;
 
 async function initShop() {
   try {
+    // تحميل الفئات ديناميكيًا
+    await initCategories();
+
     const querySnapshot = await loadProducts();
     allProducts = [];
     querySnapshot.forEach((doc) => {
@@ -375,8 +377,38 @@ async function initShop() {
   }
 }
 
+async function initCategories() {
+  try {
+    const categoriesSnapshot = await loadCategories();
+    if (categoryListContainer) {
+      categoryListContainer.innerHTML = ""; 
+      categoriesSnapshot.forEach((doc) => {
+        const categoryData = doc.data();
+        const categoryName = categoryData.Name;
+
+        const categoryHTML = `
+                    <div class="form-check mb-3">
+                        <input class="form-check-input category-check" type="checkbox" value="${categoryName}"
+                            id="cat-${doc.id}">
+                        <label class="form-check-label ms-2" for="cat-${doc.id}">${categoryName}</label>
+                    </div>
+                `;
+        categoryListContainer.innerHTML += categoryHTML;
+      });
+
+      const categoryChecks = document.querySelectorAll(".category-check");
+      categoryChecks.forEach((check) => {
+        check.addEventListener("change", renderFilteredProducts);
+      });
+    }
+  } catch (error) {
+    console.error("Error loading categories:", error);
+  }
+}
+
 function renderFilteredProducts() {
   const maxPrice = parseInt(priceRange.value);
+  const categoryChecks = document.querySelectorAll(".category-check");
   const selectedCategories = Array.from(categoryChecks)
     .filter((check) => check.checked)
     .map((check) => check.value);
@@ -390,16 +422,19 @@ function renderFilteredProducts() {
   });
 
   if (productsRow) productsRow.innerHTML = "";
-  if (productCount) productCount.innerText = `Showing ${filtered.length} products`;
+  if (productCount)
+    productCount.innerText = `Showing ${filtered.length} products`;
 
   const wishlist = getWishlist();
 
   filtered.forEach((product) => {
     const detailsLink = `ProductDetails.html?id=${product.id}`;
-    const imageUrl = Array.isArray(product.Image_URLs) ? product.Image_URLs[0] : product.Image_URLs;
-    
-    const isFavorite = wishlist.some(item => item.id === product.id);
-    const heartIcon = isFavorite ? 'fa-solid' : 'fa-regular';
+    const imageUrl = Array.isArray(product.Image_URLs)
+      ? product.Image_URLs[0]
+      : product.Image_URLs;
+
+    const isFavorite = wishlist.some((item) => item.id === product.id);
+    const heartIcon = isFavorite ? "fa-solid" : "fa-regular";
 
     const cardHTML = `
     <div class="col-lg-4 col-md-6 mb-4">
@@ -407,7 +442,7 @@ function renderFilteredProducts() {
              data-id="${product.id}" 
              data-name="${product.Product_Name}" 
              data-price="${product.Price}" 
-             data-img="${imageUrl || 'https://via.placeholder.com/300'}"
+             data-img="${imageUrl || "https://via.placeholder.com/300"}"
              data-url="${detailsLink}" style="cursor: pointer;">
              
             <div class="img-wrapper position-relative">
@@ -437,52 +472,52 @@ function renderFilteredProducts() {
 }
 
 if (productsRow) {
-    productsRow.addEventListener("click", (e) => {
-        if (e.target.closest(".buy-now-btn") || e.target.closest(".wishlist-btn-overlay")) {
-            return;
-        }
-        const card = e.target.closest(".custom-card");
-        if (card) {
-            const url = card.getAttribute("data-url");
-            if (url) window.location.href = url;
-        }
-    });
+  productsRow.addEventListener("click", (e) => {
+    if (
+      e.target.closest(".buy-now-btn") ||
+      e.target.closest(".wishlist-btn-overlay")
+    ) {
+      return;
+    }
+    const card = e.target.closest(".custom-card");
+    if (card) {
+      const url = card.getAttribute("data-url");
+      if (url) window.location.href = url;
+    }
+  });
 }
 
 if (priceRange) {
-    priceRange.addEventListener("input", () => {
-        if (priceValue) priceValue.innerText = `$${priceRange.value}`;
-        renderFilteredProducts();
-    });
+  priceRange.addEventListener("input", () => {
+    if (priceValue) priceValue.innerText = `$${priceRange.value}`;
+    renderFilteredProducts();
+  });
 }
 
-categoryChecks.forEach((check) => {
-    check.addEventListener("change", renderFilteredProducts);
-});
 
 quickPriceBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        const min = btn.getAttribute("data-min");
-        const max = btn.getAttribute("data-max");
-        if (max) {
-            priceRange.value = max;
-            if (priceValue) priceValue.innerText = `$${max}`;
-        } else if (min) {
-            priceRange.value = priceRange.max;
-            if (priceValue) priceValue.innerText = `$${priceRange.max}`;
-        }
-        renderFilteredProducts();
-    });
+  btn.addEventListener("click", () => {
+    const min = btn.getAttribute("data-min");
+    const max = btn.getAttribute("data-max");
+    if (max) {
+      priceRange.value = max;
+      if (priceValue) priceValue.innerText = `$${max}`;
+    } else if (min) {
+      priceRange.value = priceRange.max;
+      if (priceValue) priceValue.innerText = `$${priceRange.max}`;
+    }
+    renderFilteredProducts();
+  });
 });
 
 if (resetBtn) {
-    resetBtn.addEventListener("click", () => {
-        priceRange.value = priceRange.max;
-        if (priceValue) priceValue.innerText = `$${priceRange.max}`;
-        categoryChecks.forEach((c) => (c.checked = false));
-        renderFilteredProducts();
-    });
+  resetBtn.addEventListener("click", () => {
+    priceRange.value = priceRange.max;
+    if (priceValue) priceValue.innerText = `$${priceRange.max}`;
+    const categoryChecks = document.querySelectorAll(".category-check");
+    categoryChecks.forEach((c) => (c.checked = false));
+    renderFilteredProducts();
+  });
 }
 
 initShop();
-

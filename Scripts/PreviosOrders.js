@@ -18,6 +18,16 @@ async function fetchAndDisplayOrders() {
   try {
     allOrders = await getMyOrders();
 
+    allOrders.sort((a, b) => {
+      const dateA = a.createdAt?.seconds
+        ? a.createdAt.seconds * 1000
+        : new Date(a.createdAt).getTime();
+      const dateB = b.createdAt?.seconds
+        ? b.createdAt.seconds * 1000
+        : new Date(b.createdAt).getTime();
+      return dateB - dateA;
+    });
+
     renderOrders(allOrders);
   } catch (error) {
     console.error("Error fetching orders:", error);
