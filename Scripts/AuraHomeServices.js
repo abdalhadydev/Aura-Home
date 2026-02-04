@@ -96,7 +96,7 @@ export async function loadCategories() {
 
 
 export async function createCategory(category) {
-export async function createCategory(category) {
+
     try {
         const docRef = await addDoc(collection(db, "Category"), {
             Name: category.Name
