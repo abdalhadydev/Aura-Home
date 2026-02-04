@@ -84,7 +84,7 @@ export async function deleteProduct(productId) {
 
 
 
-export async function laodCategories() {
+export async function loaddCategories() {
     const querySnapshot = await getDocs(collection(db, "Category"));
 
     querySnapshot.forEach((doc) => {
@@ -95,7 +95,7 @@ export async function laodCategories() {
 }
 
 
-export async function crateCategory(category) {
+export async function createCategory(category) {
     try {
         const docRef = await addDoc(collection(db, "Category"), {
             Name: category.Name
@@ -209,6 +209,7 @@ export async function createOrder(cartItems, total) {
         });
 
         console.log("Order created");
+        //will decrease the stock by user quantity later; 
         return true;
 
     } catch (error) {
@@ -289,6 +290,38 @@ export async function promoteToAdmin(targetUserId) {
 
     } catch (error) {
         console.error("Promotion failed:", error);
+        return false;
+    }
+}
+
+
+export async function downgradeAdmin(targetUserId) {
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+        console.error("Not logged in");
+        return false;
+    }
+
+    try {
+        
+        const currentUserDoc = await getDoc(doc(db, "users", currentUser.uid));
+
+        if (currentUserDoc.data().role !== "admin") {
+            console.error("Only admins can downgrade other admins");
+            return false;
+        }
+
+        
+        await updateDoc(doc(db, "users", targetUserId), {
+            role: "customer"
+        });
+
+        console.log("User downgraded from admin");
+        return true;
+
+    } catch (error) {
+        console.error("Downgrade failed:", error);
         return false;
     }
 }

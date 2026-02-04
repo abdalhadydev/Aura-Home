@@ -24,6 +24,7 @@ console.log(x.data());
 
 
 
+
 const words = ["Elevated", "Tailored", "Artisanal", "Curated", "Flawless"];
 const textEl = document.getElementById("typing");
 
@@ -53,8 +54,8 @@ function erase() {
 
 type();
 
-
-
+var s=document.getElementById("search-icon");
+console.log(s);
 
 document.getElementById("search-icon").addEventListener("click", ()=>{
     document.getElementById("search-bar").scrollIntoView({
@@ -62,4 +63,14 @@ document.getElementById("search-icon").addEventListener("click", ()=>{
         block:"end"
     });
 })
+
+var ss=document.getElementById("search-button");
+console.log(ss);
+
+document.getElementById("search-button").addEventListener("click", ()=>{
+    var search=document.getElementById("search-input").value;
+    console.log(search);
+    console.log("dlkfgkdfjghkdfg");
+    
+});
 
