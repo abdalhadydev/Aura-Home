@@ -1,6 +1,6 @@
 
 import { db, auth } from "../Scripts/firebase.js";
-import { collection, doc, addDoc, getDocs, deleteDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import {serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
@@ -84,7 +84,7 @@ export async function deleteProduct(productId) {
 
 
 
-export async function loaddCategories() {
+export async function loadCategories() {
     const querySnapshot = await getDocs(collection(db, "Category"));
 
     querySnapshot.forEach((doc) => {
@@ -95,6 +95,7 @@ export async function loaddCategories() {
 }
 
 
+export async function createCategory(category) {
 export async function createCategory(category) {
     try {
         const docRef = await addDoc(collection(db, "Category"), {

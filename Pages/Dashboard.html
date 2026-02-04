@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" >
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Admin Dashboard</title>
@@ -19,22 +19,22 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link rel="stylesheet" href="../Styles/styleDashboard.css" />
+    <link rel="stylesheet" href="../Styles/StyleDashboard.css" />
   </head>
   <body>
     <div class="d-flex">
       <!-- Sidebar -->
       <aside class="sidebar">
-        <h4 class="logo">🪑 Furniture</h4>
+        <h4 class="logo"><i id="sofa-icon" class="fa-solid fa-couch"></i> Aura Home</a></h4>
 
         <ul class="nav flex-column">
           <li>
-            <a href="index.html" class="active"
+            <a href="Dashboard.html" class="active"
               ><i class="fa fa-home"></i> Dashboard</a
             >
           </li>
           <li>
-            <a href="admins.html"><i class="fa fa-user-shield"></i> Admins</a>
+            <a href="Admins.html"><i class="fa fa-user-shield"></i> Admins</a>
           </li>
           <li>
             <a href="categories.html"><i class="fa fa-list"></i> Categories</a>
@@ -101,72 +101,9 @@
       </main>
     </div>
 
-    <script src="js/main.js"></script>
-    <script>
-      // Pie Chart
+    <script type="module" src="../Scripts/Dashboard.js" >
+    
       
-      const orderStatusChart = new Chart(
-        document.getElementById("orderStatus"),
-        {
-          type: "doughnut",
-          data: {
-            labels: ["Completed", "In Progress", "Canceled"],
-            datasets: [
-              {
-                data: [], 
-                backgroundColor: ["#22c55e", "#facc15", "#ef4444"], 
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            plugins: {
-              legend: {
-                display: true,
-              },
-            },
-            cutout: "70%", 
-          },
-        },
-      );
-
-      // Bar Chart - Orders by Month (initially empty)
-      const ordersByMonthChart = new Chart(
-        document.getElementById("ordersByMonth"),
-        {
-          type: "bar",
-          data: {
-            labels: ["January", "February", "March", "April", "May", "June"],
-            datasets: [
-              {
-                label: "Number of Orders",
-                data: [], 
-                backgroundColor: "#3b82f6",
-              },
-            ],
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  stepSize: 1, 
-                },
-              },
-            },
-          },
-        },
-      );
-
-      // Sign Out
-      const logoutBtn = document.getElementById("logoutBtn");
-
-      if (logoutBtn) {
-        logoutBtn.addEventListener("click", function () {
-          localStorage.removeItem("currentUser");
-          window.location.href = "login.html";
-        });
-      }
     </script>
   </body>
 </html>

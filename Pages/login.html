@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
-    <link rel="stylesheet" href="/Styles/stlogin.css" />
+    <link rel="stylesheet" href="/Styles/Stlogin.css" />
     <title>Login & Register</title>
   </head>
 
@@ -18,44 +18,49 @@
       <div class="form-container sign-up">
         <form id="signUpForm">
           <h1>Create Account</h1>
-
-          <!-- Username -->
-          <div class="icons">
-            <i class="fa-solid fa-user"></i>
-            <input
-              type="text"
-              id="suUsername"
-              placeholder="UserName"
-              required
-            />
+          <div class="input-box">
+            <!-- Username -->
+            <div class="icons">
+              <i class="fa-solid fa-user"></i>
+              <input
+                type="text"
+                id="suUsername"
+                placeholder="UserName"
+                required
+              />
+            </div>
           </div>
           <span id="suUsernameError" class="error"></span>
 
-          <!-- Email -->
-          <div class="icons">
-            <i class="fa-solid fa-envelope"></i>
-            <input type="email" id="suEmail" placeholder="Email" required />
+          <div class="input-box">
+            <!-- Email -->
+            <div class="icons">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" id="suEmail" placeholder="Email" required />
+            </div>
           </div>
           <span id="suEmailError" class="error"></span>
 
-          <!-- Password -->
-          <div class="icons password-box">
-            <i class="fa-solid fa-lock"></i>
-            <input
-              type="password"
-              id="suPassword"
-              placeholder="Password"
-              required
-            />
-            <i
-              class="fa-solid fa-eye toggle-pass"
-              id="x"
-              onclick="togglePassword('suPassword', this)"
-            ></i>
+          <div class="input-box">
+            <!-- Password -->
+            <div class="icons password-box">
+              <i class="fa-solid fa-lock"></i>
+              <input
+                type="password"
+                id="suPassword"
+                placeholder="Password"
+                required
+              />
+              <i
+                class="fa-solid fa-eye toggle-pass"
+                id="r"
+                onclick="togglePassword('suPassword', this)"
+              ></i>
+            </div>
           </div>
           <span id="suPasswordError" class="error"></span>
 
-          <button type="submit">Sign Up</button>
+          <button type="submit" class="btn">Sign Up</button>
         </form>
       </div>
 
@@ -63,29 +68,38 @@
       <div class="form-container sign-in">
         <form id="signInForm">
           <h1>Sign In</h1>
-
-          <!-- Username -->
-          <div class="icons">
-            <i class="fa-solid fa-envelope"></i>
-            <input type="email" id="siUsername" placeholder="Email" required />
+          <div class="input-box">
+            <!-- email -->
+            <div class="icons">
+              <i class="fa-solid fa-envelope"></i>
+              <input
+                type="email"
+                id="siUsername"
+                placeholder="Email"
+                required
+              />
+            </div>
           </div>
           <span id="siUsernameError" class="error"></span>
 
           <!-- Password -->
-          <div class="icons password-box">
-            <i class="fa-solid fa-lock"></i>
-            <input
-              type="password"
-              id="siPassword"
-              class="text-box"
-              placeholder="Password"
-              required
-            />
-            <i
-              class="fa-solid fa-eye toggle-pass"
-              id="x"
-              onclick="togglePassword('siPassword', this)"
-            ></i>
+          <div class="input-box">
+            <div class="icons password-box">
+              <i class="fa-solid fa-lock"></i>
+              <input
+                type="password"
+                id="siPassword"
+                class="text-box"
+                placeholder="Password"
+                required
+              />
+
+              <i
+                class="fa-solid fa-eye toggle-pass"
+                id="x"
+                onclick="togglePassword('siPassword', this)"
+              ></i>
+            </div>
           </div>
           <span id="siPasswordError" class="error"></span>
 
@@ -93,9 +107,10 @@
             <input type="checkbox" id="rememberMe" />
             <label for="rememberMe">Remember me</label>
           </div>
-
-          <a href="#">Forget Your Password?</a>
-          <button type="submit">Sign In</button>
+          <div class="Forget">
+            <a href="#">Forget Your Password?</a>
+          </div>
+          <button type="submit" class="btn">Sign In</button>
         </form>
       </div>
 
@@ -104,18 +119,18 @@
         <div class="toggle">
           <div class="toggle-panel toggle-left">
             <h1>Welcome Back!</h1>
-            <p>Enter your personal details to use all of site features</p>
-            <button class="hidden" id="login">Sign In</button>
+            <p>You need to create an account to continue</p>
+            <button class="btn" id="login">Sign In</button>
           </div>
           <div class="toggle-panel toggle-right">
             <h1>Welcome, Friend!</h1>
-            <p>Enter your personal details to use all of site features</p>
-            <button class="hidden" id="register">Sign Up</button>
+            <p>Please sign in to access your account</p>
+            <button class="btn" id="register">Sign Up</button>
           </div>
         </div>
       </div>
     </div>
 
-    <script type="module" src="../Scripts/script.js"></script>
+    <script type="module" src="../Scripts/ScriptLogin.js"></script>
   </body>
 </html>

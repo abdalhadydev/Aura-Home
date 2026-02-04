@@ -10,23 +10,14 @@ body {
   font-family: "Work Sans", sans-serif;
   color: var(--text-dark);
 }
-/* العنوان داخل الـ wrapper فوق الفورم */
-.admin-form-wrapper h4 {
-  font-family: "Playfair Display", serif;
-  color: var(--main-color);
-  text-align: center; /* يوسط العنوان */
-  margin-bottom: 20px; /* مسافة بين العنوان والفورم */
-  font-size: 22px; /* حجم الخط أكبر لو تحبي */
-}
 
-/* ================= Sidebar ================= */
+/* Sidebar */
 .sidebar {
   width: 240px;
   height: 100vh;
   background: #fff;
   border-right: 1px solid #eee;
   padding: 20px;
-
   position: fixed;
   left: 0;
   top: 0;
@@ -61,7 +52,7 @@ body {
   color: var(--main-color);
 }
 
-/* ================= Content ================= */
+/* Content */
 .content {
   margin-left: 240px;
   padding: 20px;
@@ -82,107 +73,63 @@ body {
   margin: 0;
 }
 
-/* ================= Admin Form ================= */
-.admin-form-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center; 
-  flex-direction: column;  
-  align-items: center;     
-  margin-top: 30px;       
-}
-.admin-form-solid {
-  max-width: 550px;
-  width: 100%;
-  background: #fff;
-  padding: 30px;
+/* Dropdown Wrapper */
+.admin-dropdown-wrapper {
+  max-width: 500px;
+  margin: 30px auto;
+  background: var(--card-bg);
+  padding: 25px;
   border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.admin-form-solid input {
-  height: 50px;
-  border-radius: 12px;
-  border: 1.5px solid #d1d5db;
-  padding: 0 16px;
-  font-size: 15px;
-  font-family: "Work Sans", sans-serif;
-  transition: 0.3s ease;
-}
-
-.admin-form-solid input:focus {
-  outline: none;
-  border-color: var(--main-color);
-  box-shadow: 0 0 0 3px rgba(2, 80, 72, 0.12);
-}
-
-.admin-form-solid button {
-  background: var(--main-color);
-  color: #fff;
-  border: none;
-  height: 50px;
-  border-radius: 14px;
-  font-weight: 600;
-  font-size: 15px;
-  transition: 0.3s ease;
-}
-
-.admin-form-solid button:hover {
-  background: #013b36;
-}
-
-.admin-form-solid button:disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
-}
-
-#adminMsg {
-  font-size: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
   text-align: center;
 }
 
-/* ================= Admins Table ================= */
-#adminsTableSection {
-  background: #fff;
-  padding: 25px;
-  border-radius: 18px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-  margin-top: 40px;
-}
-
-#adminsTableSection h4 {
+.admin-dropdown-wrapper label {
   font-family: "Playfair Display", serif;
+  font-size: 18px;
   color: var(--main-color);
-  margin-bottom: 15px;
+  display: block;
+  margin-bottom: 12px;
 }
 
-#adminsTableSection table {
-  margin-bottom: 0;
-}
-
-#adminsTableSection th {
-  background: #f5f6fa;
-  font-size: 14px;
-  color: var(--text-dark);
-}
-
-#adminsTableSection td {
-  font-size: 14px;
-  vertical-align: middle;
-}
-
-/* Action icons */
-#adminsTableSection i {
+.admin-dropdown-wrapper select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid #d1d5db;
   font-size: 15px;
+  font-family: "Work Sans", sans-serif;
 }
 
-#adminsTableSection i.fa-edit {
-  color: #2563eb;
+.btn-admin {
+  background: var(--main-color);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .3s;
 }
 
-#adminsTableSection i.fa-trash {
-  color: #dc2626;
+.btn-admin:hover {
+  background: #037c6f;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.btn-delete:hover {
+  background: #a32424;
+}
+
+#actionMsg {
+  font-size: 14px;
+  font-weight: 500;
 }
