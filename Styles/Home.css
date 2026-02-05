@@ -38,90 +38,9 @@
 
 
 
-.navbar {
-    background-color: #025048;
-    padding: 0.5rem;
-    color: white;
-
-
-}
-
-.navbar-brand {
-    font-family: 'Playfair-Display';
-    color: white;
-    font-size: 2rem;
-    margin-left: 4.5rem;
-    font-weight: bold;
-    
-}
-.navbar-brand:focus{
-    color: white;
-}
-
-
-.navbar-toggler:focus,
-.navbar-toggler:active,
-.navbar-toggler:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-
-.navbar-collapse {
-    text-align: center;
-}
 
 
 
-.navbar-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.navbar-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin: 1rem;
-    justify-content: center;
-}
-
-.nav-link {
-    text-transform: uppercase;
-    color: white;
-    transition: all 0.4s;
-}
-
-.nav-link:hover {
-    letter-spacing: 4px;
-    font-weight: 600;
-    color: #1E7F73;
-
-
-
-
-}
-
-.navbar-brand:hover {
-    color: white;
-}
-
-.icon-wrapper{
-    padding: 0.4rem;
-    border-radius: 50px;
-    display: flex;
-    font-size: 1.3rem;
-    cursor: pointer;
-}
-.icon-wrapper:hover{
-    transform: scale(1.3);
-    transition: transform 0.1s ease;
-    color: #025048;
-    background-color :white;
-    
-    
-}
 
 .hero {
 
@@ -213,83 +132,6 @@
 }
 
 
-.button-x {
-    position: relative;
-    color: white;
-    background: transparent;
-    border: 1px solid white;
-    padding: 10px 24px;
-    overflow: hidden;
-    transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 1;
-    text-decoration: none;
-}
-
-.button-x:before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0;
-    background: white;
-    transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: -1;
-}
-
-.button-x:hover {
-    color: #025048;
-
-}
-
-.button-x:hover:before {
-    height: 100%;
-}
-
-.button-x:active {
-    transform: scale(0.97);
-}
-
-
-
-
-.button-y {
-    position: relative;
-    color:white;
-    background: #025048;
-    border: 1px solid #025048;
-    padding: 8px 24px;
-    overflow: hidden;
-    transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 1;
-    text-decoration: none;
-}
-
-.button-y:before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0;
-    background:white;
-    transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: -1;
-}
-
-.button-y:hover {
-    color: #025048;
-    border: #025048 2px solid;
-
-}
-
-.button-y:hover:before {
-    height: 100%;
-}
-
-.button-y:active {
-    transform: scale(0.97);
-}
 
 
 
@@ -528,4 +370,140 @@ margin-right: auto;
 }
 .prd-card-text{
     font-family: 'Work-Sans';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Fady's Newsetller*/
+
+
+
+#newsletter {
+  margin: 250px 0;
+}
+
+.parallax-container {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  background-image: url("../Resources/Images/mid-century-modern-living-room-interior-design-with-monstera-tree.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+.parallax-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.parallax-container .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* .newsletter-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+} */
+
+.newsletter-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  backdrop-filter: blur(5px); 
+}
+.input-group {
+  background-color: #f8f9fa; 
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.input-group input {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 12px;
+  color: #333 !important;
+}
+
+.input-group input:focus {
+  background: transparent;
+  color: white;
+  box-shadow: none;
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-subscribe {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 12px;
+  transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+  background-color: #eeeeee;
+  color: #000000;
+}
+
+.newsletter-note {
+  font-size: 10px;
+  opacity: 0.5;
+  margin-top: 15px;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.message {
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .parallax-container {
+    background-attachment: scroll;
+    min-height: 400px;
+  }
+
+  .newsletter-card {
+    padding: 1.5rem;
+  }
 }

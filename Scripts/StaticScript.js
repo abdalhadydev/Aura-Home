@@ -1,11 +1,14 @@
 
 export async function load() {
-    const res = await fetch("navbar.html");
+    const res = await fetch("Static.html");
     const html = await res.text();
 
-    document.getElementById("navbar").innerHTML = html;
-
+    const footer=await fetch("footer.html");
+    const footerHtml=await footer.text();
     
+    document.getElementById("navbar").innerHTML = html;
+    document.getElementById("footer").innerHTML=footerHtml;
+
 }
 
 export async function setupEvents() {

@@ -1,8 +1,268 @@
+@font-face {
+    font-family: 'Work-Sans';
+    src: url('../Resources/Fonts/WorkSans-Regular.ttf') format('truetype');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Playfair-Display';
+    src: url('../Resources/Fonts/PlayfairDisplay-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url("../Resources/Fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../Resources/Fonts/Montserrat-Regular.ttf');
+}
+
+
+@font-face {
+    font-family: 'Quizlo';
+    src: url("../Resources/Fonts/Quizlo.otf");
+}
+
+.navbar {
+    background-color: #025048;
+    padding: 0.5rem;
+    color: white;
+
+
+}
+
+.navbar-brand {
+    font-family: 'Playfair-Display';
+    color: white;
+    font-size: 2rem;
+    margin-left: 4.5rem;
+    font-weight: bold;
+    
+}
+.navbar-brand:focus{
+    color: white;
+}
+
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+.navbar-collapse {
+    text-align: center;
+}
+
+
+
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 1rem;
+    justify-content: center;
+}
+
+.nav-link {
+    text-transform: uppercase;
+    color: white;
+    transition: all 0.4s;
+}
+
+.nav-link:hover {
+    letter-spacing: 4px;
+    font-weight: 600;
+    color: #1E7F73;
+
+}
+
+.navbar-brand:hover {
+    color: white;
+}
+
+
+
+.icon-wrapper{
+    padding: 0.4rem;
+    border-radius: 50px;
+    display: flex;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+.icon-wrapper:hover{
+    transform: scale(1.3);
+    transition: transform 0.1s ease;
+    color: #025048;
+    background-color :white;
+    
+    
+}
+
+.button-x {
+    position: relative;
+    color: white;
+    background: transparent;
+    border: 1px solid white;
+    padding: 10px 24px;
+    overflow: hidden;
+    transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+    text-decoration: none;
+}
+
+.button-x:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: white;
+    transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: -1;
+}
+
+.button-x:hover {
+    color: #025048;
+
+}
+
+.button-x:hover:before {
+    height: 100%;
+}
+
+.button-x:active {
+    transform: scale(0.97);
+}
+
+
+
+
+.button-y {
+    position: relative;
+    color:white;
+    background: #025048;
+    border: 1px solid #025048;
+    padding: 8px 24px;
+    overflow: hidden;
+    transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+    text-decoration: none;
+}
+
+.button-y:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background:white;
+    transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: -1;
+}
+
+.button-y:hover {
+    color: #025048;
+    border: #025048 2px solid;
+
+}
+
+.button-y:hover:before {
+    height: 100%;
+}
+
+.button-y:active {
+    transform: scale(0.97);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Fady's Footer*/
+
+
+
+#footer {
+  background-color: #025048;
+  color: #ffffff;
+  padding: 60px 0;
+  font-family: "Playfair Display", serif;
+}
+
+.footer-title {
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-list li {
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: #ffffff;
+  display: flex;
+  align-items: flex-start;
+}
+
+.footer-list li i {
+  margin-right: 10px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.footer-list a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: 0.3s;
+  opacity: 0.8;
+}
+
+.footer-list a:hover {
+  opacity: 1;
+  padding-left: 5px;
+}
+
+@media (max-width: 991px) {
+  .footer-title {
+    margin-top: 10px;
+  }
+}
+
+
+
 .sticky-sidebar::-webkit-scrollbar {
     width: 0px;
 }
-/**/
-/* تحسين شكل بطاقة المنتج في قائمة الأمنيات */
+
 .wishlist-item-card {
     display: flex;
     align-items: center;
@@ -50,8 +310,6 @@
     font-size: 0.9rem;
 }
 
-/* أزرار التحكم */
- /************************   Wish List  **********************/
 
 .custom-wishlist-sidebar {
     width: 420px !important;
@@ -158,12 +416,11 @@
     border: 2px solid white;
 }
 
-/* opisty cart */
+
 #cart-items-container {
     transition: opacity 0.4s ease;
 }
-/***********************************************************22*/
-/* Sidebar Background & Border */
+
 .aura-sidebar-premium {
     width: 450px !important;
     background: #ffffff;
@@ -198,7 +455,6 @@
     padding: 0.8rem !important;
 }
 
-/* previous orders*/
 .order-master-card {
     background: #fff;
     border: 2px solid #1a1a1a; 
@@ -273,3 +529,4 @@
 .footer-hidden {
     display: none !important;
 }
+
