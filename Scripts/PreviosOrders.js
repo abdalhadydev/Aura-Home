@@ -60,11 +60,19 @@ function renderOrders(orders) {
       const date = order.createdAt.seconds
         ? new Date(order.createdAt.seconds * 1000)
         : new Date(order.createdAt);
-      dateStr = date.toLocaleDateString("en-US", {
+
+      const timePart = date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+      });
+
+      const datePart = date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
       });
+
+      dateStr = `${timePart} — ${datePart}`;
     }
 
     const status = (order.status || "pending").toLowerCase();
