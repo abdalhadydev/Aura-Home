@@ -1,7 +1,7 @@
 
 import { db, auth } from "../Scripts/firebase.js";
 import { collection, doc, addDoc, getDocs, getDoc, deleteDoc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-import {serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import {serverTimestamp, query, where, increment } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
@@ -192,32 +192,82 @@ export async function forgotPassword(email) {
 
 
 
+
+
 export async function createOrder(cartItems, total) {
     const user = auth.currentUser;
-
-    if (!user) {
-        console.error("User not logged in");
-        return false;
-    }
+    if (!user) return false;
 
     try {
-        await addDoc(collection(db, "orders"), {
-            userId: user.uid,
-            items: cartItems,
-            total: total,
-            status: "pending",
-            createdAt: serverTimestamp()    
-        });
+    
+    for (const item of cartItems) {
+        const product = await getProductById(item.productId);
 
-        console.log("Order created");
-        //will decrease the stock by user quantity later; 
-        return true;
+        if (!product) throw "Product not found";
+
+        if (product.Stock_Quantity < item.quantity)
+            throw `Not enough stock for ${item.productId}`;
+    }
+
+    
+    for (const item of cartItems) {
+        await updateDoc(doc(db, "Product", item.productId), {
+        Stock_Quantity: increment(-item.quantity)
+        });
+    }
+
+    
+    await addDoc(collection(db, "orders"), {
+        userId: user.uid,
+        items: cartItems,
+        total,
+        status: "pending",
+        createdAt: serverTimestamp()
+    });
+
+    return true;
 
     } catch (error) {
         console.error("Order failed:", error);
+    return false;
+    }
+}
+
+
+export async function returnOrder(orderId) {
+    const user = auth.currentUser;
+    if (!user) return false;
+
+    try {
+    const orderRef = doc(db, "orders", orderId);
+    const orderSnap = await getDoc(orderRef);
+
+    if (!orderSnap.exists()) throw "Order not found";
+
+    const orderData = orderSnap.data();
+
+    if (orderData.status === "returned")
+        throw "Order already returned";
+
+    
+    for (const item of orderData.items) {
+        await updateDoc(doc(db, "Product", item.productId), {
+        Stock_Quantity: increment(item.quantity)
+        });
+    }
+
+    
+    await updateDoc(orderRef, { status: "returned" });
+
+    return true;
+
+    } catch (error) {
+        console.error("Return failed:", error);
         return false;
     }
 }
+
+
 
 
 
