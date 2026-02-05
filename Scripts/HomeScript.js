@@ -55,7 +55,7 @@ function erase() {
 type();
 
 var s=document.getElementById("search-icon");
-console.log(s);
+//console.log(s);
 
 document.getElementById("search-icon").addEventListener("click", ()=>{
     document.getElementById("search-bar").scrollIntoView({
@@ -70,7 +70,14 @@ console.log(ss);
 document.getElementById("search-button").addEventListener("click", ()=>{
     var search=document.getElementById("search-input").value;
     console.log(search);
-    console.log("dlkfgkdfjghkdfg");
+    window.location.href="Products-Page.html";
     
 });
+
+document.getElementById("search-input").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("search-button").click();
+    }
+});
+
 
