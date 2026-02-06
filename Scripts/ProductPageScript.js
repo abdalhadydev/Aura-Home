@@ -298,7 +298,9 @@ resetBtn.addEventListener("click", () => {
 initShop();*/
 
 
-import { load, setupEvents } from "./StaticScript.js";
+import{load, setupEvents} from "./StaticScript.js";
+
+
 
 await load();
 await setupEvents();
@@ -366,7 +368,6 @@ window.handleWishlistClick = handleWishlistClick;
 
 async function initShop() {
   try {
-    // تحميل الفئات ديناميكيًا
     await initCategories();
 
     const querySnapshot = await loadProducts();

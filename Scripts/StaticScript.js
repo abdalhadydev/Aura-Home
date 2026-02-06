@@ -15,12 +15,20 @@ export async function load() {
     const footer=await fetch("footer.html");
     const footerHtml=await footer.text();
     
+    
     document.getElementById("navbar").innerHTML = html;
     let f=document.getElementById("footer");
     if(f){
         f.innerHTML=footerHtml;
     }
-
+ setTimeout(() => {
+   if (typeof window.updateCartIconCount === "function")
+     window.updateCartIconCount();
+   if (typeof window.renderCart === "function") window.renderCart();
+   if (typeof window.updateWishlistIconCount === "function")
+     window.updateWishlistIconCount();
+   if (typeof window.renderWishlist === "function") window.renderWishlist();
+ }, 100);
 }
 
 export async function setupEvents() {
