@@ -298,6 +298,10 @@ resetBtn.addEventListener("click", () => {
 initShop();*/
 
 
+import { load, setupEvents } from "./StaticScript.js";
+
+await load();
+await setupEvents();
 import { loadProducts, loadCategories } from "../Scripts/AuraHomeServices.js";
 
 const productsRow = document.getElementById("products-row");

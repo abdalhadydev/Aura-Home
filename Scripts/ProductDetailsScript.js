@@ -1,3 +1,5 @@
+import { load, setupEvents } from "./StaticScript.js";
+
 import { getProductById } from "../Scripts/AuraHomeServices.js";
 
 const sofaIcon = document.getElementById("sofa-icon");
@@ -214,7 +216,6 @@ function setupInteractions(maxStock, product) {
       if (typeof window.handleWishlistClick === "function") {
         const icon = this.querySelector("i");
 
-        
         const mockBtn = {
           closest: () => ({
             getAttribute: (attr) => {
@@ -238,3 +239,5 @@ function setupInteractions(maxStock, product) {
     };
   }
 }
+await load();
+await setupEvents();
