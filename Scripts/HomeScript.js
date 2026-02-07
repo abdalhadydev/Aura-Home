@@ -79,6 +79,10 @@ buyNowButtons.forEach(button => {
 
 
 
+
+
+
+
 /*Fady's Newsettler*/
 
 let email = document.querySelector("#email");
