@@ -436,6 +436,7 @@ footer {
     max-height: 200px;
     display: block;
     margin: 1rem;
+    transition: border-radius 0.6s ease, transform 0.4s ease;
 }
 .category-photo:hover{
     border-radius: 1rem 5rem;
