@@ -147,3 +147,17 @@ searchInput.addEventListener("input", () => {
 });
 
 window.addEventListener("DOMContentLoaded", loadOrders);
+
+
+
+import{load, setupEvents} from "./StaticScript.js"
+
+
+
+await load();
+await setupEvents();
+
+var nav=document.getElementById("navbar");
+nav.style.position = "sticky";
+nav.style.top = "0";
+nav.style.zIndex = "2000";

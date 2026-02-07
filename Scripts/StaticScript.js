@@ -56,6 +56,11 @@ export async function setupEvents() {
     });
   });
 
+  document.getElementById("navbar-brand").addEventListener("click", ()=>{
+    window,location.href="/Pages/Home.html";
+    console.log("dklfjgfdg");
+  })
+
   const cartKey = "aura_cart";
 
   function showCustomPopup(title, message, type = "alert") {
