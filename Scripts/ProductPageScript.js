@@ -167,7 +167,7 @@ function renderFilteredProducts() {
                 <p class="card-text text-truncate-custom">${product.Description || ""}</p>
                 <button class="btn btn-outline-brown mt-auto buy-now-btn" 
                         onclick="event.stopPropagation( ); addToCartFromPage(this)"> 
-                    BUY NOW
+                    Add to Cart
                 </button>   
             </div>
         </div>

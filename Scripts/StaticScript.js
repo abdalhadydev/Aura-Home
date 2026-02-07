@@ -263,15 +263,15 @@ export async function setupEvents() {
       if (success) {
         for (const item of cart) {
           const productData = await getProductById(item.id);
-          if (productData) {
-            const newStock =
-              (parseInt(productData.Stock_Quantity) || 0) - item.quantity;
-            await updateProduct(item.id, {
-              Stock_Quantity: newStock >= 0 ? newStock : 0,
-            });
-          }
+          // if (productData) {
+          //   const newStock =
+          //     (parseInt(productData.Stock_Quantity) || 0) - item.quantity;
+          //   await updateProduct(item.id, {
+          //     Stock_Quantity: newStock >= 0 ? newStock : 0,
+          //   });
+          // }
         }
-
+decrease
         localStorage.removeItem(cartKey);
         updateCartIconCount();
         renderCart();
