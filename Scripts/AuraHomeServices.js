@@ -88,7 +88,7 @@ export async function loadCategories() {
     const querySnapshot = await getDocs(collection(db, "Category"));
 
     querySnapshot.forEach((doc) => {
-        console.log(doc.id, doc.data());
+        //console.log(doc.id, doc.data());
     });
 
     return querySnapshot;
@@ -197,22 +197,23 @@ export async function forgotPassword(email) {
 export async function createOrder(cartItems, total) {
     const user = auth.currentUser;
     if (!user) return false;
-
+    console.log(cartItems);
     try {
     
     for (const item of cartItems) {
-        const product = await getProductById(item.productId);
+        const product = await getProductById(item.id);
+       // console.log(item.Id);
 
         if (!product) throw "Product not found";
 
         if (product.Stock_Quantity < item.quantity)
-            throw `Not enough stock for ${item.productId}`;
+            throw `Not enough stock for ${item.id}`;
     }
 
     
     for (const item of cartItems) {
-        await updateDoc(doc(db, "Product", item.productId), {
-        Stock_Quantity: increment(-item.quantity)
+            await updateDoc(doc(db, "Product", item.id), {
+            Stock_Quantity: increment(-item.quantity)
         });
     }
 
@@ -251,7 +252,7 @@ export async function returnOrder(orderId) {
 
     
     for (const item of orderData.items) {
-        await updateDoc(doc(db, "Product", item.productId), {
+        await updateDoc(doc(db, "Product", item.id), {
         Stock_Quantity: increment(item.quantity)
         });
     }
@@ -383,16 +384,28 @@ export async function updateOrderStatus(orderId, newStatus) {
     if (!user) return false;
 
     const userDoc = await getDoc(doc(db, "users", user.uid));
-
     if (userDoc.data().role !== "admin") {
         console.error("Only admin can update orders");
         return false;
     }
 
     try {
-        await updateDoc(doc(db, "orders", orderId), {
-            status: newStatus
-        });
+        const orderRef = doc(db, "orders", orderId);
+        const orderSnap = await getDoc(orderRef);
+
+        if (!orderSnap.exists()) throw "Order not found";
+
+        const orderData = orderSnap.data();
+
+        if (newStatus === "canceled" && orderData.status !== "canceled") {
+            for (const item of orderData.items) {
+                await updateDoc(doc(db, "Product", item.id), {
+                    Stock_Quantity: increment(item.quantity)
+                });
+            }
+        }
+
+        await updateDoc(orderRef, { status: newStatus });
 
         console.log("Order status updated:", newStatus);
         return true;
@@ -402,6 +415,7 @@ export async function updateOrderStatus(orderId, newStatus) {
         return false;
     }
 }
+
 
 
 

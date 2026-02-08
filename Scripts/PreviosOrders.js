@@ -1,3 +1,9 @@
+import{load, setupEvents} from "./StaticScript.js"
+
+
+
+await load();
+await setupEvents();
 import { auth } from "../Scripts/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { getMyOrders } from "../Scripts/AuraHomeServices.js";

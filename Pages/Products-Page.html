@@ -4,85 +4,37 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products Page</title>
+    <title>Products - Aura Home</title>
+    <link rel="icon" type="image/x-icon" href="../Resources/Images/favicon_io/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
     <link rel="stylesheet" href="../Styles/Products-Page-Style.css" />
-    <link rel="stylesheet" href="../Styles/style.css">
-    <link rel="stylesheet" href="../Styles/sidbarstyle.css">
-    <link rel="stylesheet" href="../Styles/footer.css">
+    <link rel="stylesheet" href="../Styles/Styles.css">
+
     <style>
-        .text-danger{
+        .text-danger {
             color: #025048 !important;
-            
+
         }
-        .text-center{
+
+        .text-center {
             text-align: start !important;
         }
     </style>
 </head>
 
 <body>
-     <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div id="navbar">
 
 
-            <a class="navbar-brand" href="#">
-                <i id="sofa-icon" class="fa-solid fa-couch"></i> Aura Home</a>
-
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
-            </button>
-
-
-            <div class="collapse navbar-collapse" id="mainNav">
-
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4 navbar-center">
-                    <li class="nav-item"><a class="nav-link" href="Home.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Products-Page.html">Shop</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contactUs.html">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="myOrder.html">My Orders</a></li>
-
-                </ul>
-
-
-                <div class="navbar-right d-flex align-items-center">
-                    <lord-icon
-    src="https://cdn.lordicon.com/xaekjsls.json"
-    trigger="hover"
-    style="height:50px" colors="primary:#ffffff">
-</lord-icon>
-    <div class="position-relative me-3" onclick="toggleWishlist()" style="cursor: pointer;">
-        <lord-icon src="https://cdn.lordicon.com/hsabxdnr.json" trigger="hover" colors="primary:#ffffff" style="height:50px"></lord-icon>
-        <span id="wishlist-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none; font-size: 0.7rem; z-index: 10;">0</span>
     </div>
 
-    <div id="UserIcon" class="d-flex align-items-center">    <lord-icon src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff" style="height:50px"></lord-icon>
-</div>
 
-
-    <div class="position-relative ms-3" onclick="toggleCart( )" style="cursor: pointer;">
-        <lord-icon src="https://cdn.lordicon.com/fmsilsqx.json" trigger="hover" state="hover-slide" colors="primary:#ffffff" style="height:50px"></lord-icon>
-        <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none; font-size: 0.7rem; z-index: 10;">0</span>
-    </div>
-    
-</div>
-            </div>
-
-        </div>
-    </nav>
-
-    <div class="container mt-5">
-        <div class="hero-section mb-5 text-center">
-            <h1 class="main-title">All Products</h1>
-            <p class="subtitle">High-quality luxury furniture</p>
-        </div>
+    <div class="container-fluid mt-5">
 
         <div class="row">
             <div class="col-lg-3">
-                <div class="sidebar-filters sticky-sidebar">
+                <div class="sidebar-filters sticky-sidebar mx-3">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-normal mb-0">Filters</h5>
                         <button id="reset-filters" class="btn btn-sm btn-light border rounded px-3 py-1 text-muted"
@@ -145,6 +97,110 @@
             </div>
 
             <div class="col-lg-9">
+
+                <div class="catergories container-fluid">
+
+                    <div class="hero-carousel">
+
+                        <div class="hero-track">
+
+                            <section class="hero-slide">
+                                <div class="category row">
+
+                                    <div class="category-text col-9">
+                                        <h2>Elegant Chairs</h2>
+                                        <p>
+                                            Discover thoughtfully crafted chairs designed for everyday comfort, refined
+                                            simplicity, and lasting beauty. Each piece blends soft textures, balanced
+                                            proportions, and timeless character to elevate calm, modern living spaces
+                                            with
+                                            effortless elegance.
+                                        </p>
+                                        <a href="#" class="button-x">Explore Collection</a>
+                                    </div>
+
+                                    <div class="category-photo col-3"
+                                        style="background-color: #E6D7CC;">
+                                        <img src="../Resources/Images/catoegory-chair.png" alt="">
+                                    </div>
+
+                                </div>
+                            </section>
+
+
+                            <section class="hero-slide">
+                                <div class="category row">
+
+
+                                    <div class="category-text col-9">
+                                        <h2>Timeless Sofas</h2>
+                                        <p>
+                                            Experience sofas crafted for deep comfort, quiet elegance, and everyday
+                                            living. Soft
+                                            upholstery, balanced forms, and timeless materials create inviting spaces
+                                            designed
+                                            for relaxation, connection, and beautifully refined moments at home.
+                                        </p>
+                                        <a href="#" class="button-x">Explore Collection</a>
+                                    </div>
+
+                                    <div class="category-photo col-3" style="background-color: #8C5A4A;">
+                                        <img src="../Resources/Images/catoegory-sofa.png" alt="">
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <section class="hero-slide">
+                                <div class="category row">
+
+                                    <div class="category-text col-9">
+                                        <h2>Restful Beds</h2>
+                                        <p>
+                                            Quiet forms, soft finishes, and thoughtful construction come together to
+                                            support
+                                            deep rest and effortless comfort, bringing harmony, warmth, and understated
+                                            beauty
+                                            to modern bedrooms designed for calm everyday living.
+                                        </p>
+                                        <a href="#" class="button-x">Explore Collection</a>
+                                    </div>
+
+                                    <div class="category-photo col-3"
+                                        style="background-color: #5A646B;">
+                                        <img src="../Resources/Images/catoegory-bed.png" alt="">
+                                    </div>
+
+                                </div>
+                            </section>
+
+
+                            <section class="hero-slide">
+                                <div class="category row">
+
+
+                                    <div class="category-text col-9">
+                                        <h2>Ambient Lighting</h2>
+                                        <p>
+                                            Soft illumination and refined forms come together to shape warm, inviting
+                                            atmospheres. Thoughtfully crafted lighting enhances mood, highlights
+                                            texture, and
+                                            brings gentle depth to modern interiors designed for comfort and quiet
+                                            beauty.
+                                        </p>
+                                        <a href="#" class="button-x">Explore Collection</a>
+                                    </div>
+                                    <div class="category-photo col-3" style="background-color: #2F2A27;">
+                                        <img src="../Resources/Images/catoegory-lamp.png" alt="">
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="mb-4 d-flex justify-content-between align-items-center">
                     <div>
                         <h2 class="h4 fw-bold">Furniture Collection</h2>
@@ -155,109 +211,60 @@
                 </div>
             </div>
         </div>
+
+
+        <script>
+            
+
+
+            const track = document.querySelector(".hero-track");
+            const slides = document.querySelectorAll(".hero-slide");
+            const carousel = document.querySelector(".hero-carousel");
+
+            let index = 0;
+            const delay = 2000;
+            let interval;
+
+            function nextSlide() {
+                index = (index + 1) % slides.length;
+                track.style.transform = `translateX(-${index * 100}%)`;
+            }
+
+            function startAutoSlide() {
+                interval = setInterval(nextSlide, delay);
+            }
+
+            function stopAutoSlide() {
+                clearInterval(interval);
+            }
+
+
+            startAutoSlide();
+
+
+            carousel.addEventListener("mouseenter", stopAutoSlide);
+
+
+            carousel.addEventListener("mouseleave", startAutoSlide);
+        </script>
+
+
     </div>
-    <div class="offcanvas offcanvas-end aura-sidebar-premium" tabindex="-1" id="cartSidebar"
-        aria-labelledby="cartSidebarLabel">
-        <div class="offcanvas-header border-bottom">
-            <h5 class="offcanvas-title text-white" id="cartSidebarLabel">My Cart <i
-                    class="fa-solid fa-bag-shopping text-success ms-2"></i></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body d-flex flex-column">
-            <div id="cart-items-container" class="flex-grow-1 overflow-auto">
-            </div>
 
-            <div class="p-3 border-top">
-                <div class="d-flex justify-content-between mb-2">
-                    <span> Total:</span>
-                    <span id="cart-total-price" class="fw-bold">$0.00</span>
-                </div>
-                <button class="btn btn-outline-custom w-100 py-3 checkout-btn-main" onclick="handleCheckout()">
-                    Checkout
-                </button>
-                <p class="text-center text-muted mt-2" style="font-size: 0.75rem;">
-            </div>
-        </div>
+    <div id="footer">
+
     </div>
-<div class="offcanvas offcanvas-end aura-sidebar-premium" tabindex="-1" id="wishlistSidebar" aria-labelledby="wishlistSidebarLabel">
-    <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title text-white" id="wishlistSidebarLabel">My Wishlist <i class="fa-solid fa-heart text-danger ms-2"></i></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body d-flex flex-column">
-        <div id="wishlist-items-container" class="flex-grow-1 overflow-auto">
-        </div>
-        <div class="p-3 border-top">
-            <button class="btn btn-outline-custom w-100 py-3" onclick="closeWishlist()" data-bs-dismiss="offcanvas">
-                Continue Shopping
-            </button>
-        </div>
-    </div>
-</div>
-<footer id="footer" class="mt-5">
-      <div class="container">
-        <div class="footer-content">
-          <div class="row gy-5 justify-content-between">
-            <div class="col-6 col-lg-3">
-              <h5 class="footer-title">Reach us</h5>
-              <ul class="footer-list list-unstyled">
-                <li>
-                  <i class="bi bi-telephone-fill"></i>
-                  <span>+1012 3456 789</span>
-                </li>
-                <li>
-                  <i class="bi bi-envelope-fill"></i>
-                  <span>demo@gmail.com</span>
-                </li>
-                <li>
-                  <i class="bi bi-geo-alt-fill"></i>
-                  <span
-                    >132 Dartmouth Street Boston, Massachusetts 02156 United
-                    States</span
-                  >
-                </li>
-              </ul>
-            </div>
-
-            <div class="col-6 col-lg-2">
-              <h5 class="footer-title">Company</h5>
-              <ul class="footer-list list-unstyled">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Blogs</a></li>
-              </ul>
-            </div>
-
-            <div class="col-6 col-lg-2">
-              <h5 class="footer-title">Legal</h5>
-              <ul class="footer-list list-unstyled">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms & Services</a></li>
-                <li><a href="#">Terms of Use</a></li>
-                <li><a href="#">Refund Policy</a></li>
-              </ul>
-            </div>
-
-            <div class="col-6 col-lg-2">
-              <h5 class="footer-title">Quick Links</h5>
-              <ul class="footer-list list-unstyled">
-                <li><a href="#">Techlabz Keybox</a></li>
-                <li><a href="#">Downloads</a></li>
-                <li><a href="#">Forum</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-
         <script src="https://cdn.lordicon.com/lordicon.js"></script>
 
-    <script src="../Scripts/wishlist.js" type="module"></script>
-    <script src="../Scripts/Cartscript.js" type="module"></script>
+
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script type="module" src="../Scripts/Cartscript.js"></script>
+    <script type="module" src="../Scripts/wishlist.js"></script>
+    <script type="module" src="../Scripts/StaticScript.js"></script>
     <script src="../Scripts/ProductPageScript.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/2a6092e1db.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

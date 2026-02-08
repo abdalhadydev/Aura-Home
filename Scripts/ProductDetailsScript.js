@@ -1,3 +1,5 @@
+import { load, setupEvents } from "./StaticScript.js";
+
 import { getProductById } from "../Scripts/AuraHomeServices.js";
 
 const sofaIcon = document.getElementById("sofa-icon");
@@ -64,6 +66,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         "<div class='container mt-5'><p class='alert alert-warning'>Product not found.</p></div>";
       return;
     }
+
+    document.title = `${productData.Product_Name} - Aura Home`;
 
     const product = {
       id: productId,
@@ -211,10 +215,9 @@ function setupInteractions(maxStock, product) {
 
   if (wishlistBtn) {
     wishlistBtn.onclick = function (e) {
-      if (typeof window.handleWishlistClick === "function") {
+      if (typeof window.addToWishlist === "function") {
         const icon = this.querySelector("i");
 
-        
         const mockBtn = {
           closest: () => ({
             getAttribute: (attr) => {
@@ -227,14 +230,18 @@ function setupInteractions(maxStock, product) {
           querySelector: (sel) => this.querySelector(sel),
         };
 
-        window.handleWishlistClick(e, mockBtn);
+        window.addToWishlist(mockBtn);
 
         if (icon.classList.contains("fa-regular")) {
           icon.classList.replace("fa-regular", "fa-solid");
         } else {
           icon.classList.replace("fa-solid", "fa-regular");
         }
+      } else {
+        console.error("addToWishlist function is not defined in window scope.");
       }
     };
   }
 }
+await load();
+await setupEvents();
