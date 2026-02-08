@@ -409,7 +409,7 @@ footer {
 }
 
 .catergories {
-    height: 300px;                 
+                    
     border-radius: 6px;
     background: linear-gradient(180deg, #9C6B5E 0%, #C7A79C 100%);
     overflow: hidden;              
@@ -419,7 +419,7 @@ footer {
 }
 
 .category{
-    margin:1rem 4rem;
+    margin: 1rem auto;
     align-items: center;
     
 }
