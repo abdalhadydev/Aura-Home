@@ -125,40 +125,51 @@ document.getElementById("email").addEventListener("keydown", function(event) {
 /*Hamdy's Contact Us*/
 
 
+try {
+    await load();
+    await setupEvents();
+} catch (e) {
+    console.error("StaticScript load failed, but continuing...", e);
+}
 
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('jsContactForm');
+const contactForm = document.getElementById('jsContactForm');
 
-    form.addEventListener('submit', function (event) {
+if (contactForm) {
+    contactForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            event.preventDefault();
-            handleFormSubmission();
+        if (!contactForm.checkValidity()) {
+            contactForm.classList.add('was-validated');
+            return;
         }
 
-        // 
-        form.classList.add('was-validated');
-    }, false);
+        const submitBtn = contactForm.querySelector('.btn-send');
+        const originalText = submitBtn.innerText;
 
-    function handleFormSubmission() {
         const formData = {
-            firstName: document.getElementById('fName').value,
-            lastName: document.getElementById('lName').value,
-            email: document.getElementById('userEmail').value,
-            phone: document.getElementById('userPhone').value,
-            message: document.getElementById('userMsg').value,
-            date: new Date().toLocaleString()
+            firstName: document.getElementById('fName').value.trim(),
+            lastName: document.getElementById('lName').value.trim(),
+            email: document.getElementById('userEmail').value.trim(),
+            phone: document.getElementById('userPhone').value.trim(),
+            message: document.getElementById('userMsg').value.trim(),
+            timestamp: new Date().toISOString()
         };
 
-        console.log("Saving Contact Data:", formData);
-        alert("Thank you! Your message has been sent successfully.");
+        try {
+            submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Sending...`;
+            submitBtn.disabled = true;
 
-        form.reset();
-    }
-});
+            console.log("Success! Data collected:", formData);
+            alert('Thank you! Your message has been sent successfully.');
 
-
-
+            contactForm.reset();
+            contactForm.classList.remove('was-validated');
+        } catch (error) {
+            alert('Error sending message.');
+        } finally {
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+        }
+    }, false);
+}
