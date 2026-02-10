@@ -290,7 +290,7 @@ scrollBtn.addEventListener("click", () => {
           //   });
           // }
         }
-decrease
+
         localStorage.removeItem(cartKey);
         updateCartIconCount();
         renderCart();
@@ -299,6 +299,7 @@ decrease
           "Your order has been placed successfully!",
           "alert",
         );
+        
       } else {
         showCustomPopup("Error", "Failed to place order. Please try again.");
         if (btn) {
