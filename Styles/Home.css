@@ -642,6 +642,23 @@
 
 
 /* Hamdy's Contact Us*/
+    .ContactUS {
+    background-color: #f8f9fa; 
+    min-height: 100vh;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px 0;
+}
+    .ContactUS2 {
+    background-color: #f8f9fa; 
+    min-height: 100vh;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px 0;
+}
+
 
   .ContactUS {
     background-color: #f8f9fa; 
@@ -795,6 +812,7 @@ h3,
     animation: fadeInUp 1s ease-in-out;
 
 }
+<<<<<<< HEAD
 .contact-container {
     display: flex;
     min-height: 500px; 
@@ -827,3 +845,5 @@ h3,
     transform: translateY(0); 
     visibility: visible; 
 }
+=======
+>>>>>>> 6f3c7ae50d5ade421e7ad1562208453dcbdbbe8f
