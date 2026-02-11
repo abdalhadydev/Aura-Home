@@ -29,6 +29,7 @@ const actionMsg = document.getElementById("actionMsg");
 async function loadUsers() {
   try {
     const snapshot = await getDocs(collection(db, "users"));
+    //console.log(snapshot);
 
     usersDropdown.innerHTML =
       "<option value=''> -- Select a user -- </option>";
@@ -133,3 +134,4 @@ deleteUserBtn.addEventListener("click", async () => {
 
 /* ================= INIT ================= */
 window.addEventListener("DOMContentLoaded", loadUsers);
+await loadUsers();
