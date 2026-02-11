@@ -706,6 +706,7 @@ h3,
     padding: 40px;
     position: relative;
     min-height: 100%;
+    min-width: auto;
 
 
 }
@@ -803,6 +804,10 @@ h3,
 .contact-info {
     height: 100%; 
 }
+.invalid-feedback {
+  word-wrap: break-word; 
+}
+
 
 /****************************** message **************************/
 /* --- Professional Success Message Styles --- */
@@ -827,3 +832,4 @@ h3,
     transform: translateY(0); 
     visibility: visible; 
 }
+
