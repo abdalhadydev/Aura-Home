@@ -3,6 +3,7 @@ import {
   getProductById,
   updateProduct,
   logoutUser,
+  getMyRole
 } from "../Scripts/AuraHomeServices.js";
 import { auth } from "../Scripts/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -26,7 +27,7 @@ export async function load() {
     if (typeof window.updateWishlistIconCount === "function")
       window.updateWishlistIconCount();
     if (typeof window.renderWishlist === "function") window.renderWishlist();
-  }, 100);
+  }, 1000);
 }
 
 export async function setupEvents() {
@@ -61,6 +62,14 @@ export async function setupEvents() {
     navbarBrand.addEventListener("click", () => {
       window.location.href = "/Pages/Home.html";
     });
+  }
+
+  const dashboardLink=document.getElementById("dashboard-link");
+  const userRole=await getMyRole();
+  console.log(userRole);
+  if(userRole==='admin'){
+    console.log(userRole);
+    dashboardLink.innerHTML=`<li id="dashboard-link" class="nav-item"><a class="nav-link" href="Dashboard.html" style="display:block;">Dashboard</a></li>`
   }
 
 const scrollBtn = document.getElementById("scrollTopBtn");
