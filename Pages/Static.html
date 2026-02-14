@@ -2,7 +2,7 @@
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
 
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="#" id="navbar-brand">
             <i id="sofa-icon" class="fa-solid fa-couch"></i> Aura Home</a>
 
 
@@ -24,12 +24,13 @@
 
 
             <div class="navbar-right d-flex align-items-center">
-                <div id="search-icon">
+                <div id="search-icon" class="position-relative ms-3">
                     <lord-icon src="https://cdn.lordicon.com/xaekjsls.json" trigger="hover" style="height:50px"
                         colors="primary:#ffffff">
                     </lord-icon>
                 </div>
-                <div class="position-relative me-3" onclick="toggleWishlist()" style="cursor: pointer;">
+
+                <div class="position-relative ms-3" onclick="toggleWishlist()" style="cursor: pointer;">
                     <lord-icon src="https://cdn.lordicon.com/hsabxdnr.json" trigger="hover" colors="primary:#ffffff"
                         style="height:50px"></lord-icon>
                     <span id="wishlist-count"
@@ -37,7 +38,7 @@
                         style="display: none; font-size: 0.7rem; z-index: 10;">0</span>
                 </div>
 
-                <div id="UserIcon" class="d-flex align-items-center"> <lord-icon
+                <div id="UserIcon" class="position-relative ms-3"> <lord-icon
                         src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff"
                         style="height:50px"></lord-icon>
                 </div>
@@ -66,8 +67,7 @@
 <div class="offcanvas offcanvas-end aura-sidebar-premium" tabindex="-1" id="cartSidebar"
     aria-labelledby="cartSidebarLabel">
     <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title text-white" id="cartSidebarLabel">My Cart <i
-                class="fa-solid fa-bag-shopping text-success ms-2"></i></h5>
+        <h5 class="offcanvas-title text-white" id="cartSidebarLabel">Cart</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
@@ -75,16 +75,17 @@
         <div id="cart-items-container" class="flex-grow-1 overflow-auto">
         </div>
 
-        <div class="p-3 border-top">
-            <div class="d-flex justify-content-between mb-2">
-                <span> Total:</span>
-                <span id="cart-total-price" class="fw-bold">$0.00</span>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span class="cart-total-label">Total</span>
+                <span id="cart-total-price" class="cart-total-price">$0.00</span>
             </div>
-            <button class="btn btn-outline-custom w-100 py-3 checkout-btn-main" onclick="handleCheckout()">
+
+            <button class="checkout-btn-main" onclick="handleCheckout()">
                 Checkout
             </button>
-            <p class="text-center text-muted mt-2" style="font-size: 0.75rem;">
         </div>
+
     </div>
 </div>
 
@@ -106,3 +107,6 @@
         </div>
     </div>
 </div>
+
+
+<i id="scrollTopBtn" class="fa-duotone fa-solid fa-square-caret-up" style="--fa-primary-color: #ffffff; --fa-secondary-color: #025048; --fa-secondary-opacity: 1;"></i>
