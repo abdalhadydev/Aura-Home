@@ -27,6 +27,7 @@ export async function load() {
     if (typeof window.updateWishlistIconCount === "function")
       window.updateWishlistIconCount();
     if (typeof window.renderWishlist === "function") window.renderWishlist();
+    
   }, 1000);
 }
 
@@ -64,13 +65,22 @@ export async function setupEvents() {
     });
   }
 
-  const dashboardLink=document.getElementById("dashboard-link");
-  const userRole=await getMyRole();
-  console.log(userRole);
-  if(userRole==='admin'){
-    console.log(userRole);
-    dashboardLink.innerHTML=`<li id="dashboard-link" class="nav-item"><a class="nav-link" href="Dashboard.html" style="display:block;">Dashboard</a></li>`
-  }
+    try {
+      const dashboardLink = document.getElementById("dashboard-link");
+      if (dashboardLink) {
+        const userRole = await getMyRole();
+        console.log("User Role:", userRole);
+
+        if (userRole === "admin") {
+          dashboardLink.innerHTML = `<a class="nav-link" href="Dashboard.html" style="display:block;">Dashboard</a>`;
+          dashboardLink.style.display = "block"; 
+        } else {
+          dashboardLink.style.display = "none";
+        }
+      }
+    } catch (error) {
+      console.error("Error checking user role:", error);
+    }
 
 const scrollBtn = document.getElementById("scrollTopBtn");
 //console.log(scrollBtn);
@@ -325,6 +335,8 @@ const scrollBtn = document.getElementById("scrollTopBtn");
         btn.innerHTML = "Try Again";
       }
     }
+    btn.disabled = false;
+    btn.innerHTML = "Checkout";
   }
 
   function renderCart() {
@@ -407,7 +419,7 @@ const scrollBtn = document.getElementById("scrollTopBtn");
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <li><a class="dropdown-item" href="myOrder.html"><i class="fas fa-box me-2"></i>My Orders</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+          <li><a class="dropdown-item text-danger" href="login.html" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
         </ul>
       </div>
     `;
@@ -415,9 +427,9 @@ const scrollBtn = document.getElementById("scrollTopBtn");
       const logoutBtn = document.getElementById("logoutBtn");
       if (logoutBtn) {
         logoutBtn.onclick = async (e) => {
-          e.preventDefault();
+          //e.preventDefault();
           const success = await logoutUser();
-          if (success) window.location.reload();
+          if (success) window.location.href = "/login.html";
         };
       }
     } else {
